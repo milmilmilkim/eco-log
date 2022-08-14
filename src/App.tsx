@@ -1,10 +1,15 @@
-import './App.css';
+import GlobalStyle from './components/GlobalStyle';
+import Login from './pages/Login';
+import Container from './components/Layout/Container';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello world</h1>
-    </div>
+    <>
+      <GlobalStyle />
+      <Container>
+        <Login />
+      </Container>
+    </>
   );
 }
 

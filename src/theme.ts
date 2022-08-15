@@ -1,6 +1,7 @@
 const color = {
   primaryColor: '#14746F',
-  lightColor: '#DEF7EC',
+  lightColor: '#78C6A3',
+  backgroundColor: '#DEF7EC',
 };
 
 export type Color = typeof color;

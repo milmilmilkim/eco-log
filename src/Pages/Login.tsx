@@ -78,12 +78,10 @@ const LoginContainer = styled.div`
   }
 
   h1 .log {
-    left: 300px;
-    top: 472px;
   }
 
   .subscribe {
-    width: 400px;
+    width: 80%;
   }
 
   p {
@@ -105,7 +103,7 @@ const LoginContainer = styled.div`
 
   button {
     margin: auto;
-    width: 400px;
+    width: 80%;
     height: 50px;
     border-radius: 10px;
     border: none;

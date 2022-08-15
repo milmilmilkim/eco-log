@@ -1,12 +1,12 @@
-import React from 'react';
 import styled from 'styled-components';
+import { Outlet } from 'react-router-dom';
 
-type ContainrProps = {
-  children: JSX.Element;
-};
-
-const Container: React.FC<ContainrProps> = ({ children }) => {
-  return <StyledContainer>{children}</StyledContainer>;
+const Container = () => {
+  return (
+    <StyledContainer>
+      <Outlet />
+    </StyledContainer>
+  );
 };
 
 const StyledContainer = styled.div`

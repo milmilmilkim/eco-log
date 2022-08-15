@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Container from '../components/Layout/Container';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   return (
@@ -28,9 +28,15 @@ export default function Login() {
           </p>
         </div>
         <div className="button_container">
-          <button className="naver">네이버로 시작하기</button>
-          <button className="kakao">카카오로 시작하기</button>
-          <button className="google">구글로 시작하기</button>
+          <Link to="/main">
+            <button className="naver">네이버로 시작하기</button>
+          </Link>
+          <Link to="/main">
+            <button className="kakao">카카오로 시작하기</button>
+          </Link>
+          <Link to="/main">
+            <button className="google">구글로 시작하기</button>
+          </Link>
         </div>
       </div>
     </LoginContainer>

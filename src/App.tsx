@@ -1,14 +1,15 @@
 import GlobalStyle from './components/GlobalStyle';
-import Login from './pages/Login';
-import Container from './components/Layout/Container';
+import Router from './router/Router';
+import { ThemeProvider } from 'styled-components';
+import theme from './theme';
 
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <Container>
-        <Login />
-      </Container>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Router />
+      </ThemeProvider>
     </>
   );
 }

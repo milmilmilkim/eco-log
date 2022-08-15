@@ -10,15 +10,15 @@ const Container = () => {
 };
 
 const StyledContainer = styled.div`
-  width: 500px;
+  max-width: 500px;
   min-height: 100vh;
   margin: auto;
   background: #ffffff;
-  box-sizing: border-box;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  height: auto;
 `;
 
 export default Container;

@@ -1,10 +1,16 @@
-import './App.css';
+import GlobalStyle from './components/GlobalStyle';
+import Router from './router/Router';
+import { ThemeProvider } from 'styled-components';
+import theme from './theme';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello world</h1>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Router />
+      </ThemeProvider>
+    </>
   );
 }
 

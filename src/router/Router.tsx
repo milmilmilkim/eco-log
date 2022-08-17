@@ -7,6 +7,7 @@ import Login from '../pages/Login';
 import Main from '../pages/Main';
 import MyPage from '../pages/MyPage/MyPage';
 import Edit from '../pages/MyPage/Edit';
+import Write from '../pages/Write';
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
           <Route index element={<MyPage />} />
           <Route path="edit" element={<Edit />} />
         </Route>
+        <Route path="/:wirte" element={<Write />} />
       </Route>
     </Routes>
   );

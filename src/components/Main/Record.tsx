@@ -59,7 +59,7 @@ const StyledRecord = styled.div`
         padding: 5px 7px;
         background-color: ${(props) => props.theme.color.backgroundColor};
         color: #333333;
-        border-radius: 5px;
+        border-radius: 10px;
         display: inline-block;
       }
     }

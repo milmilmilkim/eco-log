@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from '../config/Axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const Auth = () => {
         navigate('/main');
       }
     })();
-  }, []);
+  }, [navigate]);
 
   return <>로그인...</>;
 };

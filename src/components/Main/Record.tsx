@@ -3,7 +3,7 @@ import Profile from '../Profile';
 
 import styled from 'styled-components';
 
-import { Card } from '../../pages/Main';
+import { Card } from '../../typing/common';
 
 const Record: React.FC<Card> = ({ nickname, bio, tag, message, like }) => {
   const props = {
@@ -19,8 +19,8 @@ const Record: React.FC<Card> = ({ nickname, bio, tag, message, like }) => {
       <Section title="오늘의 실천" />
       <div className="tag">
         <ul>
-          {tag.map((v, i) => (
-            <li>{v}</li>
+          {tag.map((v, index) => (
+            <li key={index}>{v}</li>
           ))}
         </ul>
       </div>

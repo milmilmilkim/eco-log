@@ -8,37 +8,28 @@ import { Card } from '../typing/common';
 
 import { Link } from 'react-router-dom';
 
-const cardList: Card[] = [
-  {
-    nickname: '지구지키미',
-    bio: '무가 없으면 유도 없으니까요',
-    tag: ['친환경 상점 이용', '기부와 나눔', '냉난방 온도 적정 유지', '빨대 미사용', '소고기 냠냠'],
-    message: '오늘은 깜빡하고 텀블러를 안 챙겼다... 내일은 챙기자',
-    like: 2,
-  },
-  {
-    nickname: '지구지키미',
-    bio: '무가 없으면 유도 없으니까요',
-    tag: ['친환경 상점 이용', '기부와 나눔', '냉난방 온도 적정 유지'],
-    message: '오늘은 깜빡하고 텀블러를 안 챙겼다... 내일은 챙기자',
-    like: 2,
-  },
-  {
-    nickname: '지구지키미',
-    bio: '무가 없으면 유도 없으니까요',
-    tag: ['친환경 상점 이용', '기부와 나눔', '냉난방 온도 적정 유지'],
-    message: '오늘은 깜빡하고 텀블러를 안 챙겼다... 내일은 챙기자',
-    like: 2,
-  },
-  {
-    nickname: '지구지키미',
-    bio: '무가 없으면 유도 없으니까요',
-    tag: ['친환경 상점 이용', '기부와 나눔', '냉난방 온도 적정 유지'],
-    message: '오늘은 깜빡하고 텀블러를 안 챙겼다... 내일은 챙기자',
-    like: 2,
-  },
-];
+//recoil
+import { recoilDateState } from '../state/recoilDateState';
+import { useRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+// const cardList: Card[] = [{
+//   postId:
+// }]
+import axios from '../config/Axios';
+import dayjs from 'dayjs';
+
 const Main = () => {
+  const [date] = useRecoilState<Date>(recoilDateState); //날짜
+  const [cardList, setCardList] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await axios.get('http://localhost:8080/api/post/daily?day=2022-10-17', {});
+      console.log(data);
+      // setCardList(data);
+    })();
+  }, [date]);
+
   return (
     <>
       <Top />
@@ -69,9 +60,9 @@ const Main = () => {
           </p>
         </Link>
       </Write>
-      {cardList.map(({ nickname, bio, tag, message, like }, index) => (
-        <Record key={index} nickname={nickname} bio={bio} tag={tag} message={message} like={like} />
-      ))}
+      {/* {cardList.map((card, index) => (
+        <Record key={index} card={card} />
+      ))} */}
 
       <Footer>
         all rights reserved team ~~~ <br />

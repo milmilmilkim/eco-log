@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil';
 
 const MyCalendar = () => {
   const [value, onChange] = useRecoilState<Date>(recoilDateState); //날짜
-  const [value2, onViewChange] = useState<any>(new Date()); //타입이 뭔지 모르겠다~!
+  const [, onViewChange] = useState<any>(new Date()); //타입이 뭔지 모르겠다~!
 
   //마크할 날짜들
   const marks: String[] = ['2022-08-16'];

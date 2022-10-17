@@ -5,27 +5,16 @@ import styled from 'styled-components';
 
 import { Card } from '../../typing/common';
 
-const Record: React.FC<Card> = ({ nickname, bio, tag, message, like }) => {
-  const props = {
-    nickname,
-    bio,
-    tag,
-    message,
-    like,
-  };
+const Record: React.FC<Card> = ({ userInfo, comment }) => {
   return (
     <StyledRecord>
-      <Profile {...props} />
+      <Profile {...userInfo} />
       <Section title="오늘의 실천" />
       <div className="tag">
-        <ul>
-          {tag.map((v, index) => (
-            <li key={index}>{v}</li>
-          ))}
-        </ul>
+        <ul></ul>
       </div>
 
-      <Section title="오늘의 한마디">{message}</Section>
+      <Section title="오늘의 한마디">{comment}</Section>
       <hr />
       <div className="like">
         <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +23,7 @@ const Record: React.FC<Card> = ({ nickname, bio, tag, message, like }) => {
             fill="#333333"
           />
         </svg>
-        {like}
+        {/* {like} */}
       </div>
     </StyledRecord>
   );
@@ -49,21 +38,6 @@ const StyledRecord = styled.div`
   margin-top: 30px;
   padding-bottom: 20px;
   font-size: 0.8rem;
-
-  .tag {
-    ul {
-      padding-left: 15px;
-      margin-bottom: 10px;
-      li {
-        margin: 5px;
-        padding: 5px 7px;
-        background-color: ${(props) => props.theme.color.backgroundColor};
-        color: #333333;
-        border-radius: 5px;
-        display: inline-block;
-      }
-    }
-  }
 
   hr {
     margin: 10px 20px;

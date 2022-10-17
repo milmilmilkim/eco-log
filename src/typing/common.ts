@@ -1,7 +1,13 @@
+export type UserInfo = {
+  userId: Number;
+  userNickname: String;
+  selfIntroduce?: String;
+};
+
 export type Card = {
-  nickname: String;
-  bio?: String;
-  tag: String[];
-  message?: String;
-  like: number;
+  postId: Number;
+  userInfo: UserInfo;
+  customBehaviorList: Array<String>;
+  behaviorList: Array<String>;
+  comment?: String;
 };

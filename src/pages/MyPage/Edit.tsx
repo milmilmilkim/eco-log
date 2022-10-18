@@ -5,6 +5,7 @@ import Switch from '../../components/Form/Switch';
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import TextButton from '../../components/Common/TextButton';
 
 import axios from '../../config/Axios';
 import { useEffect, useState } from 'react';
@@ -53,7 +54,7 @@ const Edit = () => {
       {userInfo && (
         <form style={{ width: '100%' }} onSubmit={profileSave}>
           <PageTitle title="프로필 설정">
-            <Button type="submit">저장</Button>
+            <TextButton type="submit">저장</TextButton>
           </PageTitle>
 
           <Section title="이름">

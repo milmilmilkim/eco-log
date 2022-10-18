@@ -4,12 +4,15 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import 'react-calendar/dist/Calendar.css';
 
+//recoil
+import { recoilDateState } from '../../state/recoilDateState';
+import { useRecoilState } from 'recoil';
+
 const MyCalendar = () => {
-  const [value, onChange] = useState<Date>(new Date());
-  const [value2, onViewChange] = useState<any>(new Date());
+  const [value, onChange] = useRecoilState<Date>(recoilDateState); //날짜
+  const [, onViewChange] = useState<any>(new Date()); //타입이 뭔지 모르겠다~!
 
-  console.log(value2);
-
+  //마크할 날짜들
   const marks: String[] = ['2022-08-16'];
 
   return (
@@ -24,7 +27,10 @@ const MyCalendar = () => {
             return 'highlight';
           }
         }}
-        onActiveStartDateChange={({ action, activeStartDate, value, view }) => console.log('Changed view to: ', activeStartDate)}
+        onActiveStartDateChange={({ action, activeStartDate, value, view }) => {
+          //달마다 데이터 불러오기
+          return console.log('Changed view to: ', activeStartDate);
+        }}
       />
     </>
   );

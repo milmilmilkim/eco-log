@@ -6,16 +6,16 @@ const axios = Axios.create({
 
 axios.defaults.withCredentials = true;
 
-// axios.interceptors.request.use(
-//   (request) => {
-//     request.headers["x-access-token"] = window.localStorage.getItem("accessToken");
+axios.interceptors.request.use(
+  (request) => {
+    request.headers!.Authorization = (window.localStorage.getItem('token') as string) || '';
 
-//     return request;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // axios.interceptors.response.use(
 //   (response) => {

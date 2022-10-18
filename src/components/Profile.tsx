@@ -1,18 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { UserInfo } from '../typing/common';
 
-type ProfileProps = {
-  nickname: String;
-  bio?: String;
-};
-
-const Section: React.FC<ProfileProps> = ({ nickname, bio }) => {
+const Section: React.FC<UserInfo> = ({ userNickname, selfIntroduce }) => {
   return (
     <StyledProfile>
-      <div className="circle">{nickname.substring(0, 1)}</div>
+      <div className="circle">{userNickname.substring(0, 1)}</div>
       <div className="meta">
-        <h3>{nickname}</h3>
-        <p>{bio}</p>
+        <h3>{userNickname}</h3>
+        <p>{selfIntroduce}</p>
       </div>
     </StyledProfile>
   );

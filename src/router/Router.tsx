@@ -7,6 +7,7 @@ import Login from '../pages/Login';
 import Main from '../pages/Main';
 import MyPage from '../pages/MyPage/MyPage';
 import Edit from '../pages/MyPage/Edit';
+import Write from '../pages/Write';
 
 /* 로그인 */
 import Oauth from '../pages/Oauth';
@@ -18,6 +19,7 @@ const Router = () => {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/main" element={<Main />} />
+        <Route path="/write" element={<Write />} />
         <Route path="mypage">
           <Route index element={<MyPage />} />
           <Route path="edit" element={<Edit />} />

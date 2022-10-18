@@ -1,6 +1,8 @@
 import PageTitle from '../../components/PageTitle';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios from '../../config/Axios';
+import { useEffect } from 'react';
 
 const MyPage = () => {
   return (

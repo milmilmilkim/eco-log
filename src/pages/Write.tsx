@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react';
 import PageTitle from '../components/PageTitle';
 import TextButton from '../components/Common/TextButton';
 import Section from '../components/Section';
+import Tag from '../components/Tag';
+
+import { Behavior } from '../typing/common';
 
 const Write = () => {
   const [date] = useRecoilState(recoilDateState);
@@ -28,12 +31,14 @@ const Write = () => {
       <PageTitle title={dayjs(date).format('YYYY년 MM월 DD일')}>
         <TextButton>기록</TextButton>
       </PageTitle>
-      <Section title="오늘의 실천" />
-      <ul>
-        {behavior.map(({ behaviorId, name }) => (
-          <li key={behaviorId}>{name}</li>
-        ))}
-      </ul>
+      <div style={{ marginBottom: '20px' }}></div>
+      <Section title="오늘의 실천">
+        <ul>
+          {behavior.map((item: Behavior) => (
+            <Tag key={`id_${item.behaviorId}`} text={item.name} backgroundColor="#fff" border />
+          ))}
+        </ul>
+      </Section>
     </>
   );
 };

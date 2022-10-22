@@ -23,8 +23,8 @@ const Edit = () => {
 
   const getMyProfile = async () => {
     try {
-      const { data } = await axios.get('/api/user/profile');
-      setUserInfo(data);
+      // const { data } = await axios.get('/api/user/profile');
+      // setUserInfo(data);
     } catch (err) {
       console.error(err);
     }
@@ -73,14 +73,5 @@ const Edit = () => {
     </>
   );
 };
-
-const Button = styled.button`
-  color: ${(props) => props.theme.color.primaryColor};
-  background-color: #fff;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 0.9rem;
-`;
 
 export default Edit;

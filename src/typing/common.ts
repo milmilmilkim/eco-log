@@ -7,9 +7,11 @@ export type UserInfo = {
 export type Card = {
   postId: Number;
   userInfo: UserInfo;
-  customBehaviorList: Array<String>;
+  customBehaviorList?: Array<String>;
   behaviorList: Array<String>;
   comment?: String;
+  heartCount: Number;
+  alreadyHeart: Boolean;
 };
 
 export type TagProps = {

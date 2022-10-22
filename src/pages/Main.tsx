@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Record from '../components/Main/Record';
 import Top from '../components/Main/Top';
 
-import { Card } from '../typing/common';
+// import { Card } from '../typing/common';
 
 import { Link } from 'react-router-dom';
 
@@ -19,16 +19,21 @@ import axios from '../config/Axios';
 import dayjs from 'dayjs';
 
 const Main = () => {
-  const [date] = useRecoilState<Date>(recoilDateState); //날짜
+  const [today] = useRecoilState<Date>(recoilDateState); //날짜
   const [cardList, setCardList] = useState([]);
 
+  //일간 모든 게시글들 불러오기
+  const getDaily = async () => {
+    const { data } = await axios.get('/api/post/daily', {
+      params: {
+        day: dayjs(today).format('YYYY-MM-DD'),
+      },
+    });
+    setCardList(data);
+  };
   useEffect(() => {
-    (async () => {
-      const data = await axios.get('http://localhost:8080/api/post/daily?day=2022-10-17', {});
-      console.log(data);
-      // setCardList(data);
-    })();
-  }, [date]);
+    getDaily();
+  }, [today]);
 
   return (
     <>
@@ -60,9 +65,18 @@ const Main = () => {
           </p>
         </Link>
       </Write>
-      {/* {cardList.map((card, index) => (
-        <Record key={index} card={card} />
-      ))} */}
+      {cardList.map(({ postId, userInfo, comment, behaviorList, customBehaviorList, heartCount, alreadyHeart }) => (
+        <Record
+          key={postId}
+          postId={postId}
+          comment={comment}
+          userInfo={userInfo}
+          customBehaviorList={customBehaviorList}
+          behaviorList={behaviorList}
+          alreadyHeart={alreadyHeart}
+          heartCount={heartCount}
+        />
+      ))}
 
       <Footer>
         all rights reserved team ~~~ <br />

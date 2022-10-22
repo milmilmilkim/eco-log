@@ -10,9 +10,9 @@ import { recoilDateState } from '../../state/recoilDateState';
 import { useRecoilState } from 'recoil';
 
 const MyCalendar = () => {
-  const [value, onChange] = useRecoilState<Date>(recoilDateState); //날짜
+  const [today, onChange] = useRecoilState<Date>(recoilDateState); //날짜
   const [, onViewChange] = useState<any>(new Date()); //타입이 뭔지 모르겠다~!
-  const [monthDate, setMonthDate] = useState<String>(dayjs(value).format('YYYY-MM'));
+  const [monthDate, setMonthDate] = useState<String>(dayjs(today).format('YYYY-MM'));
   //마크할 날짜들
   const [marks, setMarks] = useState<String[]>([]);
 
@@ -34,7 +34,7 @@ const MyCalendar = () => {
     <>
       <StyledCalendar
         onChange={onChange}
-        value={value}
+        value={today}
         onViewChange={onViewChange}
         locale="en-EN"
         tileClassName={({ date, view }: any): any => {
@@ -44,7 +44,6 @@ const MyCalendar = () => {
         }}
         onActiveStartDateChange={({ action, activeStartDate, value, view }) => {
           //달마다 데이터 불러오기
-          console.log('Changed view to: ', activeStartDate);
           setMonthDate(dayjs(activeStartDate).format('YYYY-MM'));
         }}
       />

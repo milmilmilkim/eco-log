@@ -1,19 +1,24 @@
 import Section from '../Section';
 import Profile from '../Profile';
-
+import Tag from '../Tag';
 import styled from 'styled-components';
 
 import { Card } from '../../typing/common';
 
-const Record: React.FC<Card> = ({ userInfo, comment }) => {
+const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, customBehaviorList, heartCount, alreadyHeart }) => {
+  const mergedBehaviorList: String[] = [...behaviorList, ...(customBehaviorList as [])];
+
   return (
     <StyledRecord>
       <Profile {...userInfo} />
       <Section title="오늘의 실천" />
-      <div className="tag">
-        <ul></ul>
-      </div>
-
+      <ul>
+        {mergedBehaviorList.map((item, index) => {
+          if (item.trim() !== '') {
+            return <Tag key={index}>{item}</Tag>;
+          }
+        })}
+      </ul>
       <Section title="오늘의 한마디">{comment}</Section>
       <hr />
       <div className="like">
@@ -38,6 +43,10 @@ const StyledRecord = styled.div`
   margin-top: 30px;
   padding-bottom: 20px;
   font-size: 0.8rem;
+
+  ul {
+    margin-left: 15px;
+  }
 
   hr {
     margin: 10px 20px;

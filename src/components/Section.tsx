@@ -24,7 +24,8 @@ const StyledSection = styled.div`
   h2 {
     font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 10px;
   }
 `;
 

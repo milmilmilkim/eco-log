@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import 'react-calendar/dist/Calendar.css';
+import axios from '../../config/Axios';
 
 //recoil
 import { recoilDateState } from '../../state/recoilDateState';
@@ -11,9 +12,23 @@ import { useRecoilState } from 'recoil';
 const MyCalendar = () => {
   const [value, onChange] = useRecoilState<Date>(recoilDateState); //날짜
   const [, onViewChange] = useState<any>(new Date()); //타입이 뭔지 모르겠다~!
-
+  const [monthDate, setMonthDate] = useState<String>(dayjs(value).format('YYYY-MM'));
   //마크할 날짜들
-  const marks: String[] = ['2022-08-16'];
+  const [marks, setMarks] = useState<String[]>([]);
+
+  //월간 게시글 날짜 불러오기
+  const getMonthly = async () => {
+    const { data } = await axios.get('/api/post/Monthly', {
+      params: {
+        month: monthDate,
+      },
+    });
+    setMarks(data);
+  };
+
+  useEffect(() => {
+    getMonthly();
+  }, [monthDate]);
 
   return (
     <>
@@ -29,7 +44,8 @@ const MyCalendar = () => {
         }}
         onActiveStartDateChange={({ action, activeStartDate, value, view }) => {
           //달마다 데이터 불러오기
-          return console.log('Changed view to: ', activeStartDate);
+          console.log('Changed view to: ', activeStartDate);
+          setMonthDate(dayjs(activeStartDate).format('YYYY-MM'));
         }}
       />
     </>

@@ -50,7 +50,7 @@ const Write = () => {
     setPost({
       ...post,
       behaviorList: newBehaviorList,
-      doingDay: dayjs(date).format('YYYY-MM-dd'),
+      doingDay: dayjs(date).format('YYYY-MM-DD'),
     });
   };
 

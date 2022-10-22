@@ -23,7 +23,7 @@ const Tag: React.FC<TagProps> = ({ data }) => {
   return (
     <MyTag>
       <ul>
-        {data.map((tag: String, index: number) => (
+        {data?.map((tag: String, index: number) => (
           <li key={index}>{tag}</li>
         ))}
       </ul>

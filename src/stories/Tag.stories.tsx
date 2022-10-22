@@ -13,5 +13,5 @@ const Template: ComponentStory<typeof Tag> = (args) => <Tag {...args} />;
 export const Default = Template.bind({});
 
 Default.args = {
-  data: ['냠', '쩝', '모'],
+  text: '안녕!!',
 };

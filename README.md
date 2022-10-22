@@ -2,3 +2,6 @@
 
 * React
 * TypeScript
+* Storybook
+* Recoil
+* Styled Components

@@ -12,6 +12,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { recoilMyProfileState } from '../../state/recoilLoginState';
 
+import Swal from 'sweetalert2';
+
 const Edit = () => {
   const navigate = useNavigate();
 
@@ -56,9 +58,15 @@ const Edit = () => {
       await axios.post('/api/user/profile', {
         nickName: nickname.value,
         selfIntroduce: selfIntroduce.value,
-        // isPublic: isPublic.checked,
+        isPublic: isPublic.checked,
       });
-      console.log('Ok');
+      Swal.fire({
+        title: 'Success!',
+        text: '저장되었습니다',
+        icon: 'success',
+        confirmButtonText: 'ok',
+      });
+      navigate('/mypage');
     } catch (err) {
       navigate('/mypage');
     }
@@ -77,7 +85,7 @@ const Edit = () => {
           </Section>
 
           <Section title="자기소개">
-            <Input name="selfIntroduce" placeholder="자기소개를 입력하세요" maxLength={100} />
+            <Input name="selfIntroduce" defaultValue={(userInfo.selfIntroduce as string) || ''} placeholder="자기소개를 입력하세요" maxLength={100} />
           </Section>
 
           <Section title="공개 설정">

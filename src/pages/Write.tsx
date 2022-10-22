@@ -3,6 +3,7 @@ import { recoilDateState } from '../state/recoilDateState';
 import dayjs from 'dayjs';
 import axios from '../config/Axios';
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //components
 import PageTitle from '../components/PageTitle';
@@ -15,6 +16,7 @@ import Input from '../components/Form/Input';
 import { Behavior, Post } from '../typing/common';
 
 const Write = () => {
+  const Navigate = useNavigate();
   const [date] = useRecoilState(recoilDateState);
   const inputRef = useRef<HTMLInputElement>(null);
   const [behavior, setBehavior] = useState<Behavior[]>([]);
@@ -62,7 +64,10 @@ const Write = () => {
     e.preventDefault();
     setPost(post);
     console.log(post);
-    // await axios.post('/api/post', post);
+    await axios.post('/api/post', post);
+    //성공시
+    alert('ok');
+    Navigate('/main');
   };
 
   useEffect(() => {
@@ -72,11 +77,6 @@ const Write = () => {
   useEffect(() => {
     inputRef.current?.focus();
   }, [clicked]);
-
-  //디버깅
-  useEffect(() => {
-    console.log(post);
-  }, [post.behaviorList.length]);
 
   return (
     <form onChange={onFormChange} onSubmit={onSubmit}>

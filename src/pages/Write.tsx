@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import axios from '../config/Axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 //components
 import PageTitle from '../components/PageTitle';
@@ -49,6 +50,7 @@ const Write = () => {
     setPost({
       ...post,
       behaviorList: newBehaviorList,
+      doingDay: dayjs(date).format('YYYY-MM-dd'),
     });
   };
 
@@ -66,7 +68,12 @@ const Write = () => {
     console.log(post);
     await axios.post('/api/post', post);
     //성공시
-    alert('ok');
+    Swal.fire({
+      title: 'Success!',
+      text: '저장되었습니다',
+      icon: 'success',
+      confirmButtonText: 'ok',
+    });
     Navigate('/main');
   };
 

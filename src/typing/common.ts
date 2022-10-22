@@ -1,5 +1,3 @@
-import { SetStateAction, Dispatch } from 'react';
-
 export type UserInfo = {
   userId: Number;
   userNickname: String;
@@ -15,13 +13,21 @@ export type Card = {
 };
 
 export type TagProps = {
-  text: String;
+  children: JSX.Element | String;
   backgroundColor?: String;
   border?: Boolean;
   hover?: Boolean;
+  className?: String;
 };
 
 export type Behavior = {
   behaviorId: Number;
   name: String;
+};
+
+export type Post = {
+  comment?: String;
+  doingDay: String;
+  behaviorList: Number[];
+  customizedBehaviors?: String[];
 };

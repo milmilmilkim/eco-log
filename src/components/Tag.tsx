@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-import { TagProps, Behavior } from '../typing/common';
-
-// const isBehavior = (value: any): value is Behavior => true;
+import { TagProps } from '../typing/common';
 
 const Tag: React.FC<TagProps> = ({ children, backgroundColor, border, className }) => {
   return (

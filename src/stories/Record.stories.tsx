@@ -21,4 +21,5 @@ Default.args = {
   comment: '잘하자 잘해!',
   behaviorList: ['뭔가함'],
   customBehaviorList: ['진짜실천함'],
+  heartCount: 0,
 };

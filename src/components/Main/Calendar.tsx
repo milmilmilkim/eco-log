@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
@@ -9,26 +9,24 @@ import axios from '../../config/Axios';
 import { recoilDateState } from '../../state/recoilDateState';
 import { useRecoilState } from 'recoil';
 
-const MyCalendar = () => {
+const MyCalendar = ({ marks, setMarks }: any) => {
   const [today, onChange] = useRecoilState<Date>(recoilDateState); //날짜
   const [, onViewChange] = useState<any>(new Date()); //타입이 뭔지 모르겠다~!
   const [monthDate, setMonthDate] = useState<String>(dayjs(today).format('YYYY-MM'));
-  //마크할 날짜들
-  const [marks, setMarks] = useState<String[]>([]);
 
   //월간 게시글 날짜 불러오기
-  const getMonthly = async () => {
+  const getMonthly = useCallback(async () => {
     const { data } = await axios.get('/api/post/Monthly', {
       params: {
         month: monthDate,
       },
     });
     setMarks(data);
-  };
+  }, [monthDate, setMarks]);
 
   useEffect(() => {
     getMonthly();
-  }, [monthDate]);
+  }, [monthDate, getMonthly]);
 
   return (
     <>
@@ -38,7 +36,7 @@ const MyCalendar = () => {
         onViewChange={onViewChange}
         locale="en-EN"
         tileClassName={({ date, view }: any): any => {
-          if (marks.find((x) => x === dayjs(date).format('YYYY-MM-DD'))) {
+          if (marks.find((x: any) => x === dayjs(date).format('YYYY-MM-DD'))) {
             return 'highlight';
           }
         }}

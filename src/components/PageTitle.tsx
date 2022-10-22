@@ -1,15 +1,24 @@
 import styled from 'styled-components';
 // import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type PageTitleProps = {
   title: String;
   children?: JSX.Element | String;
+  prevButton?: Boolean;
 };
 
-const PageTitle: React.FC<PageTitleProps> = ({ title, children }) => {
+const PageTitle: React.FC<PageTitleProps> = ({ title, children, prevButton }) => {
+  const Navigate = useNavigate();
   return (
     <TitleContainer>
-      <div className="left"></div>
+      {prevButton ? (
+        <div onClick={() => Navigate(-1)} className="left">
+          <i className="fa fa-arrow-left" aria-hidden="true"></i>
+        </div>
+      ) : (
+        <div className="left"></div>
+      )}
       <h1>{title}</h1>
       <div className="rightTop">{children}</div>
     </TitleContainer>
@@ -30,6 +39,7 @@ const TitleContainer = styled.nav`
 
   .left {
     flex: 1;
+    cursor: pointer;
   }
   h1 {
     font-size: 1rem;

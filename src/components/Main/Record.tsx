@@ -16,6 +16,8 @@ const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, custo
         {mergedBehaviorList.map((item, index) => {
           if (item.trim() !== '') {
             return <Tag key={index}>{item}</Tag>;
+          } else {
+            return null;
           }
         })}
       </ul>

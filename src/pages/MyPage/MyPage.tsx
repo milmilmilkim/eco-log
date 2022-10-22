@@ -1,13 +1,11 @@
 import PageTitle from '../../components/PageTitle';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import axios from '../../config/Axios';
-import { useEffect } from 'react';
 
 const MyPage = () => {
   return (
     <>
-      <PageTitle title="마이 페이지" />
+      <PageTitle title="마이 페이지" prevButton={true} />
       <StyledUl>
         <li>
           <Link to="/mypage/edit">

@@ -23,9 +23,10 @@ axios.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.error(error);
     Swal.fire({
       title: 'Error!',
-      text: error.response.data || '알 수 없는 에러!',
+      text: typeof error.response.data === 'string' ? error.reponse.data.message : error.message || '알 수 없는 에러!',
       icon: 'error',
       confirmButtonText: 'ok',
     });

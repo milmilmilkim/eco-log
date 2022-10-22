@@ -1,8 +1,14 @@
 import { atom } from 'recoil';
 
-const recoilLoginState = atom({
+export const recoilLoginState = atom({
   key: 'recoilLoginState',
-  default: [],
+  default: false,
 });
 
-export default recoilLoginState;
+export const recoilMyProfileState = atom({
+  key: 'recoilMyProfileState',
+  default: {
+    userId: '',
+    userNickname: '',
+  },
+});

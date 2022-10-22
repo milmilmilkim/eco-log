@@ -40,13 +40,15 @@ const Write = () => {
 
   const onBlur = () => {
     setClicked(false);
-    console.log('ㅎㅇㅎㅇ');
   };
 
   const addBehaviorId = (id: Number) => {
-    const newBehaviorList: Number[] = post.behaviorList;
-    newBehaviorList.push(id);
-
+    let newBehaviorList: Number[] = post.behaviorList;
+    if (post.behaviorList.includes(id)) {
+      newBehaviorList = [...post.behaviorList.filter((v) => v !== id)];
+    } else {
+      newBehaviorList.push(id);
+    }
     setPost({
       ...post,
       behaviorList: newBehaviorList,
@@ -87,7 +89,7 @@ const Write = () => {
 
   return (
     <form onChange={onFormChange} onSubmit={onSubmit}>
-      <PageTitle title={dayjs(date).format('YYYY년 MM월 DD일')}>
+      <PageTitle prevButton={true} title={dayjs(date).format('YYYY년 MM월 DD일')}>
         <TextButton type="submit">기록</TextButton>
       </PageTitle>
       <div style={{ marginBottom: '20px' }}></div>

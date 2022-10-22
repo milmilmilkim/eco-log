@@ -19,4 +19,6 @@ Default.args = {
     selfIntroduce: '안녕하세요',
   },
   comment: '잘하자 잘해!',
+  behaviorList: ['뭔가함'],
+  customBehaviorList: ['진짜실천함'],
 };

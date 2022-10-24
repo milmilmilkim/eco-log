@@ -10,9 +10,12 @@ import MyPage from '../pages/MyPage/MyPage';
 import Edit from '../pages/MyPage/Edit';
 import Write from '../pages/Write';
 import Friend from '../pages/Friend/Index';
+import Me from '../pages/Me';
 /* 로그인 */
 import Oauth from '../pages/Oauth';
 import Search from '../pages/Friend/Search';
+
+import NotFound from '../pages/NotFound';
 
 const Router = () => {
   return (
@@ -31,11 +34,15 @@ const Router = () => {
           <Route index element={<MyPage />} />
           <Route path="edit" element={<Edit />} />
         </Route>
+        {/* 실천현황 */}
+        <Route path="/me" element={<Me />} />
         {/* 동료 */}
         <Route path="friend">
           <Route index element={<Friend />} />
           <Route path="search" element={<Search />} />
         </Route>
+        {/*404*/}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

@@ -75,7 +75,10 @@ const Nav = () => {
           <li>마이페이지</li>
         </Link>
         <li>실천 현황</li>
-        <li>동료 목록</li>
+        <Link to="/friend">
+          <li>동료 목록</li>
+        </Link>
+
         <li>제로웨이스트 실천가이드</li>
       </ul>
     </NavContainer>

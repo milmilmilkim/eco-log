@@ -8,6 +8,7 @@ const Top = () => {
   const handleMenu = () => {
     setVisible((visible) => !visible);
   };
+
   return (
     <>
       <Menu onClick={handleMenu}>
@@ -74,7 +75,9 @@ const Nav = () => {
         <Link to="/mypage">
           <li>마이페이지</li>
         </Link>
-        <li>실천 현황</li>
+        <Link to="/me">
+          <li>실천 현황</li>
+        </Link>
         <Link to="/friend">
           <li>동료 목록</li>
         </Link>

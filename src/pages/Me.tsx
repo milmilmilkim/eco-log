@@ -1,8 +1,28 @@
 import PageTitle from '../components/PageTitle';
 import Section from '../components/Section';
 import styled from 'styled-components';
+import { useState, useEffect, useCallback } from 'react';
+import axios from '../config/Axios';
+import { useRecoilState } from 'recoil';
+import { recoilMyProfileState } from '../state/recoilLoginState';
 
 const Me = () => {
+  const [data, setData] = useState<any>('');
+  const [myProfile] = useRecoilState(recoilMyProfileState);
+
+  const getData = useCallback(async () => {
+    const { data: res } = await axios.get('/api/user/profile', {
+      params: {
+        targetId: myProfile.userId,
+      },
+    });
+    setData(res);
+  }, [myProfile]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
   return (
     <>
       <PageTitle title="실천 현황" prevButton />

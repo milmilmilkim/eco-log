@@ -5,10 +5,12 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from '../config/Axios';
 import { useRecoilState } from 'recoil';
 import { recoilMyProfileState } from '../state/recoilLoginState';
+import { getGrowText } from '../config/Const';
 
 const Me = () => {
   const [data, setData] = useState<any>('');
   const [myProfile] = useRecoilState(recoilMyProfileState);
+  const [accumulate, setAccumulate] = useState<Number>(0);
 
   const getData = useCallback(async () => {
     const { data: res } = await axios.get('/api/user/profile', {
@@ -16,8 +18,10 @@ const Me = () => {
         targetId: myProfile.userId,
       },
     });
+    console.log(res);
     setData(res);
-  }, [myProfile]);
+    setAccumulate(res.userPostTotalCount);
+  }, [myProfile.userId]);
 
   useEffect(() => {
     getData();
@@ -27,12 +31,16 @@ const Me = () => {
     <>
       <PageTitle title="실천 현황" prevButton />
       <Section title="에코 레벨">
-        <>껍질의 보호를 ...</>
+        <>{getGrowText(accumulate)}</>
       </Section>
       <Space />
-      <Section title="실천수">어쩌고</Section>
+      <Section title="실천수">
+        <>{accumulate}</>
+      </Section>
       <Space />
-      <Section title="자주 기록한 실천">어쩌고</Section>
+      <Section title="자주 기록한 실천">
+        <>{JSON.stringify(data.userSummary)}</>
+      </Section>
       <Space />
     </>
   );

@@ -20,7 +20,7 @@ const Edit = () => {
   type UserInfo = {
     userNickname: String;
     selfIntroduce?: String;
-    public: Boolean;
+    public: 1 | 0;
   };
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
@@ -37,7 +37,7 @@ const Edit = () => {
       });
       setUserInfo({
         userNickname,
-        public: isPublic,
+        public: isPublic ? 1 : 0,
         selfIntroduce,
       });
     } catch (err) {
@@ -49,16 +49,17 @@ const Edit = () => {
     getMyProfile();
   }, [getMyProfile]);
 
-  const profileSave: React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) => {
+  const profileSave: React.FormEventHandler<HTMLFormElement> = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     const { nickname, selfIntroduce, isPublic } = e.target as HTMLFormElement;
-    console.log(nickname.value, selfIntroduce.value, isPublic.checked);
 
     try {
       await axios.post('/api/user/profile', {
         nickName: nickname.value,
         selfIntroduce: selfIntroduce.value,
-        isPublic: isPublic.checked,
+        isPublic: isPublic.checked ? 1 : 0,
       });
       Swal.fire({
         title: 'Success!',
@@ -81,15 +82,29 @@ const Edit = () => {
           </PageTitle>
 
           <Section title="이름">
-            <Input name="nickname" placeholder="닉네임을 입력하세요" maxLength={10} defaultValue={userInfo.userNickname as string} />
+            <Input
+              name="nickname"
+              placeholder="닉네임을 입력하세요"
+              maxLength={10}
+              defaultValue={userInfo.userNickname as string}
+            />
           </Section>
 
           <Section title="자기소개">
-            <Input name="selfIntroduce" defaultValue={(userInfo.selfIntroduce as string) || ''} placeholder="자기소개를 입력하세요" maxLength={100} />
+            <Input
+              name="selfIntroduce"
+              defaultValue={(userInfo.selfIntroduce as string) || ''}
+              placeholder="자기소개를 입력하세요"
+              maxLength={100}
+            />
           </Section>
 
           <Section title="공개 설정">
-            <Switch name="isPublic" defaultChecked={userInfo.public as boolean} label="추천 동료 목록에 나타나지 않아요" />
+            <Switch
+              name="isPublic"
+              defaultChecked={userInfo.public === 1 ? true : false}
+              label="추천 동료 목록에 나타나지 않아요"
+            />
           </Section>
         </form>
       )}

@@ -5,20 +5,14 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from '../config/Axios';
 import { useRecoilState } from 'recoil';
 import { recoilMyProfileState } from '../state/recoilLoginState';
-import { getGrowText, maxGrow } from '../config/Const';
+import { getGrowText, maxGrow, getGrowImage } from '../config/Const';
 
 const Me = () => {
   const [data, setData] = useState<any>('');
   const [myProfile] = useRecoilState(recoilMyProfileState);
   const [accumulate, setAccumulate] = useState<Number>(0);
 
-  const getProgress = (value: Number): number => {
-    if (value >= maxGrow) {
-      return 7;
-    } else {
-      return (value as number) % 7;
-    }
-  };
+  const getProgress = (value: Number): number => (value >= maxGrow ? 7 : (value as number) % 7);
   const getData = useCallback(async () => {
     if (myProfile.userId) {
       const { data: res } = await axios.get('/api/user/profile', {
@@ -41,6 +35,8 @@ const Me = () => {
       <Section title="에코 레벨">
         <>
           기록 {accumulate}일차 <br />
+          <img src={getGrowImage(200).src as string} alt={getGrowImage(accumulate).alt as string} />
+          <br />
           {getGrowText(accumulate)} <br />
           <MyProgress max="7" value={getProgress(accumulate)}></MyProgress>
         </>
@@ -60,6 +56,20 @@ const Me = () => {
 
 const MyProgress = styled.progress`
   width: 100%;
+  appearance: none;
+
+  &::-webkit-progress-value {
+    background-color: #57ab91;
+    border-radius: 15px;
+    height: 10px;
+    transition: all 300ms ease-in-out;
+  }
+
+  &::-webkit-progress-bar {
+    background-color: ${(props) => props.theme.color.borderColor};
+    border-radius: 15px;
+    height: 10px;
+  }
 `;
 const Space = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);

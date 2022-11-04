@@ -18,6 +18,8 @@ export const grow: Grow = [
   [0, '껍질의 보호를 받으며 성장을 기다려요.'],
 ];
 
+export const maxGrow = 57;
+
 export const getGrowText = (value: Number): String => {
   let result: String = '';
   grow.forEach((item) => {

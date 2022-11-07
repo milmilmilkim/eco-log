@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 type SectionProps = {
   title: String;
-  children?: JSX.Element | String;
+  children?: JSX.Element | String | ReactNode;
 };
 
 const Section: React.FC<SectionProps> = ({ children, title }) => {

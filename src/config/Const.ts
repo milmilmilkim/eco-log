@@ -35,7 +35,6 @@ export const getGrowText = (value: Number): String => {
   grow.forEach((item) => {
     if (value >= item[0]) {
       result = item[1];
-      return result;
     }
   });
   return result;
@@ -47,19 +46,18 @@ type GrowImage = {
 };
 export const getGrowImage = (value: Number): GrowImage => {
   let result: GrowImage = {
-    alt: '야옹',
-    src: flower,
+    src: growImage[growImage.length - 1][1],
+    alt: growImage[growImage.length - 1][2] as string,
   };
-  growImage.forEach((item) => {
-    if (value >= item[0]) {
-      console.log(item[0]);
+  for (let i = 0; i < growImage.length; i++) {
+    if (value >= growImage[i][0]) {
       result = {
-        alt: item[2] as String,
-        src: item[1] as String,
+        src: growImage[i][1],
+        alt: growImage[i][2] as string,
       };
-      return result;
+      break;
     }
-  });
+  }
 
   return result;
 };

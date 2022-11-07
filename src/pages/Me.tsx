@@ -11,6 +11,7 @@ const Me = () => {
   const [data, setData] = useState<any>('');
   const [myProfile] = useRecoilState(recoilMyProfileState);
   const [accumulate, setAccumulate] = useState<Number>(0);
+  const [growImage, setGrowImage] = useState<{ src: String; alt: String }>({ alt: '', src: '' });
 
   const getProgress = (value: Number): number => (value >= maxGrow ? 7 : (value as number) % 7);
   const getData = useCallback(async () => {
@@ -29,21 +30,39 @@ const Me = () => {
     getData();
   }, [getData]);
 
+  useEffect(() => {
+    if (accumulate) {
+      console.log(getGrowImage(accumulate));
+      setGrowImage(getGrowImage(accumulate));
+    }
+  }, [accumulate]);
+
   return (
     <>
       <PageTitle title="실천 현황" prevButton />
       <Section title="에코 레벨">
-        <>
-          기록 {accumulate}일차 <br />
-          <img src={getGrowImage(200).src as string} alt={getGrowImage(accumulate).alt as string} />
-          <br />
-          {getGrowText(accumulate)} <br />
-          <MyProgress max="7" value={getProgress(accumulate)}></MyProgress>
-        </>
+        <MyStat>
+          <>
+            <div className="container">
+              <img src={growImage.src as string} alt={growImage.alt as string} />
+              <div className="info">
+                <h3>
+                  <>기록 {accumulate}일차</>
+                </h3>
+                <span>{growImage.alt}</span>
+                <br />
+                {getGrowText(accumulate)} <br />
+              </div>
+            </div>
+            <MyProgress max="7" value={getProgress(accumulate)}></MyProgress>
+          </>
+        </MyStat>
       </Section>
       <Space />
       <Section title="실천수">
-        <>{accumulate}</>
+        <div className="container">
+          <>{accumulate}</>
+        </div>
       </Section>
       <Space />
       <Section title="자주 기록한 실천">
@@ -53,6 +72,30 @@ const Me = () => {
     </>
   );
 };
+
+const MyStat = styled.div`
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333333;
+    margin: 30px 0 30px;
+
+    .info {
+      h3 {
+        margin-bottom: 15px;
+        color: #000;
+      }
+      span {
+        font-weight: bolder;
+      }
+      margin-left: 50px;
+    }
+  }
+  img {
+    width: 100px;
+  }
+`;
 
 const MyProgress = styled.progress`
   width: 100%;

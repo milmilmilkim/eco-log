@@ -2,7 +2,7 @@ import PageTitle from '../../components/PageTitle';
 import Section from '../../components/Section';
 import Input from '../../components/Form/Input';
 import Switch from '../../components/Form/Switch';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TextButton from '../../components/Common/TextButton';
 
@@ -20,8 +20,15 @@ const Edit = () => {
   type UserInfo = {
     userNickname: String;
     selfIntroduce?: String;
-    public: 1 | 0;
+    public: 1 | 0 | boolean;
   };
+
+  enum LabelText {
+    true = '추천 동료 목록에 내 계정이 나타나요.',
+    false = '추천 동료 목록에 나타나지 않아요.',
+  }
+
+  const [labelText, setLabelText] = useState<LabelText | ''>('');
 
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [recoilMyProfile] = useRecoilState(recoilMyProfileState);
@@ -48,6 +55,14 @@ const Edit = () => {
   useEffect(() => {
     getMyProfile();
   }, [getMyProfile]);
+
+  useEffect(() => {
+    setLabelText(userInfo?.public ? LabelText.true : LabelText.false);
+  }, [userInfo?.public, LabelText.true, LabelText.false]);
+
+  const switchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.currentTarget.checked ? setLabelText(LabelText.true) : setLabelText(LabelText.false);
+  };
 
   const profileSave: React.FormEventHandler<HTMLFormElement> = async (
     e: React.FormEvent<HTMLFormElement>
@@ -103,7 +118,8 @@ const Edit = () => {
             <Switch
               name="isPublic"
               defaultChecked={userInfo.public === 1 ? true : false}
-              label="추천 동료 목록에 나타나지 않아요"
+              label={labelText}
+              onChange={switchChange}
             />
           </Section>
         </form>

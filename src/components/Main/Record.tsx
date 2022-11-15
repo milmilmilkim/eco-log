@@ -6,7 +6,15 @@ import { useState } from 'react';
 import { Card } from '../../typing/common';
 import axios from '../../config/Axios';
 
-const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, customBehaviorList, heartCount, alreadyHeart }) => {
+const Record: React.FC<Card> = ({
+  postId,
+  userInfo,
+  comment,
+  behaviorList,
+  customBehaviorList,
+  heartCount,
+  alreadyHeart,
+}) => {
   const [heart, setHeart] = useState(heartCount);
   const mergedBehaviorList: String[] = [...behaviorList, ...(customBehaviorList as [])];
   const [isActive, setIsActive] = useState<Boolean>(false);
@@ -20,7 +28,7 @@ const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, custo
 
   const cancelHeart = async () => {
     setIsActive(false);
-    setHeart(Number(heartCount) - 1);
+    setHeart(Number(heart) - 1);
     await axios.delete('/api/post/heart', {
       data: {
         targetPostId: postId,

@@ -44,7 +44,8 @@ type GrowImage = {
   alt: String;
   src: String;
 };
-export const getGrowImage = (value: Number): GrowImage => {
+export const getGrowImage = (value: Number = 0): GrowImage => {
+  console.log(value);
   let result: GrowImage = {
     src: growImage[growImage.length - 1][1],
     alt: growImage[growImage.length - 1][2] as string,

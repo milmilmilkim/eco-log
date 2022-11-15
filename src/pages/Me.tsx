@@ -6,6 +6,8 @@ import axios from '../config/Axios';
 import { useRecoilState } from 'recoil';
 import { recoilMyProfileState } from '../state/recoilLoginState';
 import { getGrowText, maxGrow, getGrowImage } from '../config/Const';
+import Tag from '../components/Tag';
+import { Behavior } from '../typing/common';
 
 const Me = () => {
   const [data, setData] = useState<any>('');
@@ -31,17 +33,14 @@ const Me = () => {
   }, [getData]);
 
   useEffect(() => {
-    if (accumulate) {
-      console.log(getGrowImage(accumulate));
-      setGrowImage(getGrowImage(accumulate));
-    }
+    accumulate ? setGrowImage(getGrowImage(accumulate)) : setGrowImage(getGrowImage(0));
   }, [accumulate]);
 
   return (
     <>
       <PageTitle title="실천 현황" prevButton />
       <Section title="에코 레벨">
-        <MyStat>
+        <MyLevel>
           <>
             <div className="container">
               <img src={growImage.src as string} alt={growImage.alt as string} />
@@ -56,24 +55,34 @@ const Me = () => {
             </div>
             <MyProgress max="7" value={getProgress(accumulate)}></MyProgress>
           </>
-        </MyStat>
+        </MyLevel>
       </Section>
       <Space />
       <Section title="실천수">
-        <div className="container">
-          <>{accumulate}</>
-        </div>
+        <MyStat>
+          <div className="row">
+            <span className="title">하루 평균</span>
+            <span className="number">9</span>
+          </div>
+          <div className="row">
+            <span className="title">누적</span>
+            <span className="number">{accumulate.toString()}</span>
+          </div>
+        </MyStat>
       </Section>
       <Space />
       <Section title="자주 기록한 실천">
-        <>{JSON.stringify(data.userSummary)}</>
+        <div style={{ marginTop: '30px' }}></div>
+        {data.userSummary?.map((item: Behavior) => (
+          <Tag key={item.behaviorId.toString()}>{item.name}</Tag>
+        ))}
       </Section>
       <Space />
     </>
   );
 };
 
-const MyStat = styled.div`
+const MyLevel = styled.div`
   .container {
     display: flex;
     justify-content: center;
@@ -94,6 +103,23 @@ const MyStat = styled.div`
   }
   img {
     width: 100px;
+  }
+`;
+
+const MyStat = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: 40px 0 40px;
+  .row {
+    float: left;
+
+    .title {
+      margin: 0 80px 0 50px;
+    }
+
+    .number {
+      font-weight: bolder;
+    }
   }
 `;
 

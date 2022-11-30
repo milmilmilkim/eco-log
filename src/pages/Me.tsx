@@ -72,11 +72,11 @@ const Me = () => {
         <MyStat>
           <div className="row">
             <span className="title">하루 평균</span>
-            <span className="number">{average}</span>
+            <span className="number">{average || 0}</span>
           </div>
           <div className="row">
             <span className="title">누적</span>
-            <span className="number">{accumulate.toString()}</span>
+            <span className="number">{accumulate}</span>
           </div>
         </MyStat>
       </Section>

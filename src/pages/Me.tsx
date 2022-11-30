@@ -8,11 +8,15 @@ import { recoilMyProfileState } from '../state/recoilLoginState';
 import { getGrowText, maxGrow, getGrowImage } from '../config/Const';
 import Tag from '../components/Tag';
 import { Behavior } from '../typing/common';
+import dayjs from 'dayjs';
 
 const Me = () => {
+  /* ================ STATE ================================ */
   const [data, setData] = useState<any>('');
   const [myProfile] = useRecoilState(recoilMyProfileState);
-  const [accumulate, setAccumulate] = useState<Number>(0);
+  const [accumulate, setAccumulate] = useState<number>(0);
+  const [average, setAverage] = useState<number>(0); //하루 평균: 총 발행을 누적 가입일수로 나눈 것
+  const [cumulative, setCumulative] = useState<number>(0);
   const [growImage, setGrowImage] = useState<{ src: String; alt: String }>({ alt: '', src: '' });
 
   const getProgress = (value: Number): number => (value >= maxGrow ? 7 : (value as number) % 7);
@@ -25,6 +29,9 @@ const Me = () => {
       });
       setData(res);
       setAccumulate(res.userPostTotalCount);
+
+      const createAt = dayjs(res.createAt).format('YYYY-MM-DD');
+      setCumulative(dayjs(new Date()).diff(createAt, 'day') + 1);
     }
   }, [myProfile.userId]);
 
@@ -32,6 +39,9 @@ const Me = () => {
     getData();
   }, [getData]);
 
+  useEffect(() => {
+    setAverage(accumulate / cumulative);
+  }, [cumulative, accumulate]);
   useEffect(() => {
     accumulate ? setGrowImage(getGrowImage(accumulate)) : setGrowImage(getGrowImage(0));
   }, [accumulate]);
@@ -62,7 +72,7 @@ const Me = () => {
         <MyStat>
           <div className="row">
             <span className="title">하루 평균</span>
-            <span className="number">9</span>
+            <span className="number">{average}</span>
           </div>
           <div className="row">
             <span className="title">누적</span>

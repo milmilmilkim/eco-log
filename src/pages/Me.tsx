@@ -7,12 +7,12 @@ import { useRecoilState } from 'recoil';
 import { recoilMyProfileState } from '../state/recoilLoginState';
 import { getGrowText, maxGrow, getGrowImage } from '../config/Const';
 import Tag from '../components/Tag';
-import { Behavior } from '../typing/common';
+import { Behavior, UserProfile } from '../typing/common';
 import dayjs from 'dayjs';
 
 const Me = () => {
   /* ================ STATE ================================ */
-  const [data, setData] = useState<any>('');
+  const [data, setData] = useState<UserProfile | null>(null);
   const [myProfile] = useRecoilState(recoilMyProfileState);
   const [accumulate, setAccumulate] = useState<number>(0);
   const [average, setAverage] = useState<number>(0); //하루 평균: 총 발행을 누적 가입일수로 나눈 것
@@ -83,7 +83,7 @@ const Me = () => {
       <Space />
       <Section title="자주 기록한 실천">
         <div style={{ marginTop: '30px' }}></div>
-        {data.userSummary?.map((item: Behavior) => (
+        {data?.userSummary?.map((item: Behavior) => (
           <Tag key={item.behaviorId.toString()}>{item.name}</Tag>
         ))}
       </Section>

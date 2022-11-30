@@ -4,6 +4,20 @@ export type UserInfo = {
   selfIntroduce?: String;
 };
 
+export type UserProfile = {
+  alreadyFollow: boolean;
+  behaviorCount: number;
+  createAt: string;
+  myProfile: boolean;
+  public: boolean;
+  recentlyCustomBehaviorList: string[];
+  selfIntroduce: string;
+  userId: number;
+  userNickname: string;
+  userPostTotalCount: number;
+  userSummary: Behavior[];
+};
+
 export type Card = {
   postId: Number;
   userInfo: UserInfo;
@@ -25,6 +39,7 @@ export type TagProps = {
 export type Behavior = {
   behaviorId: Number;
   name: String;
+  count?: number;
 };
 
 export type Post = {

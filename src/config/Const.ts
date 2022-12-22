@@ -6,6 +6,7 @@ import flower from '../assets/images/grow/5.png';
 import peapod from '../assets/images/grow/6.png';
 import bean from '../assets/images/grow/7.png';
 
+// 씨앗 관련
 type Grow = [Number, String, String?][];
 
 export const grow: Grow = [
@@ -61,3 +62,63 @@ export const getGrowImage = (value: Number = 0): GrowImage => {
 
   return result;
 };
+
+// 뱃지 관련
+
+export const BadgeMessage = [
+  {
+    name: '작심삼일이 모이면',
+    condition: '첫 3일 연속 실천 기록 입력 달성',
+    desc: '작심삼일도 열 번이면 서른 개의 실천이 쌓여요',
+  },
+  {
+    name: '꾸준함의 재능',
+    condition: '첫 30일 연속 실천 기록 입력 달성',
+    desc: '30일의 기록이 차곡차곡 쌓였어요',
+  },
+  {
+    name: '왕 발자국',
+    condition: '실천 입력 누적15개',
+    desc: '실천을 향한 우리의 작지만 큰 첫 발',
+  },
+  {
+    name: '실천가',
+    condition: '실천 입력 40개',
+    desc: '작심삼일도 열 번이면 서른 개의 실천이 쌓여요',
+  },
+  {
+    name: '제로 웨이스트 고수',
+    condition: '실천 입력 누적 70개',
+    desc: '말해모해',
+  },
+  {
+    name: '나만의 기록',
+    condition: '직접 입력 실천 누적 5개',
+    desc: '직접 기록하는 나만의 실천',
+  },
+  // {
+  //   name: '뿌듯한 성취',
+  //   condition: '에코레벨 열매 단계 도달',
+  //   desc: '열매 레벨에 도달한 걸 축하해요',
+  // },
+  {
+    name: '웰컴 백',
+    condition: '실천 미입력일 5일 후 실천 입력 재개',
+    desc: '완벽하지 않아도 느슨하게 실천을 이어가요',
+  },
+  {
+    name: '함께 갈 동료',
+    condition: '첫 팔로잉/팔로워 달성',
+    desc: '너, 내 동료가 되어라!',
+  },
+  {
+    name: '작은 마음',
+    condition: '팔로잉/팔로워에 응원 이모티콘 3개 이상 전송',
+    desc: '동료를 응원하며 작은 마음을 보태요',
+  },
+  {
+    name: '치어 업',
+    condition: '팔로잉 / 팔로워에 응원 이모티콘 50개 이상 전송',
+    desc: '지치지 않는 격려와 응원을 보내요',
+  },
+];

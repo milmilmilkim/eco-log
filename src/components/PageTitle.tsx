@@ -6,21 +6,35 @@ type PageTitleProps = {
   title: String;
   children?: JSX.Element | String;
   prevButton?: Boolean;
+  buttonPath?: string;
 };
 
-const PageTitle: React.FC<PageTitleProps> = ({ title, children, prevButton }) => {
+const PageTitle: React.FC<PageTitleProps> = ({
+  title,
+  children,
+  prevButton,
+  buttonPath,
+}) => {
   const Navigate = useNavigate();
+  const clickButton = (path?: string) => {
+    if (path) {
+      Navigate(path);
+    } else {
+      Navigate(-1);
+    }
+  };
+
   return (
     <TitleContainer>
       {prevButton ? (
-        <div onClick={() => Navigate(-1)} className="left">
-          <i className="fa fa-arrow-left" aria-hidden="true"></i>
+        <div onClick={() => clickButton(buttonPath)} className='left'>
+          <i className='fa fa-arrow-left' aria-hidden='true'></i>
         </div>
       ) : (
-        <div className="left"></div>
+        <div className='left'></div>
       )}
       <h1>{title}</h1>
-      <div className="rightTop">{children}</div>
+      <div className='rightTop'>{children}</div>
     </TitleContainer>
   );
 };

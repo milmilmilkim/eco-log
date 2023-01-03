@@ -3,16 +3,15 @@ import Profile from '../../Profile';
 import Tag from '../../Tag';
 import styled from 'styled-components';
 import { FriendItem } from '../../../typing/common';
-import { Link } from 'react-router-dom';
 
 const FriendItemComponent = (props: React.PropsWithChildren<FriendItem>) => {
   const { userSummary } = props;
 
   return (
     <StyledRecord>
-      <Link to={`/friend/${props.userId}`}>
-        <Profile {...props} />
-      </Link>
+     
+        <Profile {...props} path={`/friend/${props.userId}`} />
+    
       <Section title='오늘의 실천' />
       <ul>
         {userSummary.map((item, index) => {

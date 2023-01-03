@@ -1,21 +1,47 @@
 import React from 'react';
 import styled from 'styled-components';
 import { UserInfo } from '../typing/common';
+import { useNavigate } from 'react-router-dom';
 
-const Section: React.FC<React.PropsWithChildren<UserInfo>> = ({ userNickname, nickName, selfIntroduce, children }) => {
-
+interface ProfileProps extends UserInfo {
+  path?: string;
+}
+const Section: React.FC<React.PropsWithChildren<ProfileProps>> = ({
+  userNickname,
+  nickName,
+  selfIntroduce,
+  children,
+  path,
+  userId,
+}) => {
   const myNickname = userNickname || nickName || '-';
+  const navigate = useNavigate();
+
+  const Profile = () => {
+    return (
+      <>
+        <div className='circle'>{myNickname?.substring(0, 1)}</div>
+        <div className={`meta ${path && 'cursor-pointer'}`} onClick={clickProfile} >
+          <h3>{myNickname}</h3>
+          <p>{selfIntroduce}</p>
+        </div>
+      </>
+    );
+  };
+
+  const clickProfile = () => {
+    if (path) {
+      navigate(path);
+    }
+  };
 
   return (
     <StyledProfile>
-      <div className="circle">{myNickname?.substring(0, 1)}</div>
-      <div className="meta">
-        <h3>{myNickname}</h3>
-        <p>{selfIntroduce}</p>
-      </div>
-      <div className="inner">
-        {children}
-      </div>
+      <>
+        {Profile()}
+
+        <div className='inner'>{children}</div>
+      </>
     </StyledProfile>
   );
 };
@@ -26,6 +52,11 @@ const StyledProfile = styled.div`
   align-items: center;
   line-height: 1.2;
   padding: 20px;
+
+  .cursor-pointer {
+    cursor: pointer;
+    font-size:100px;
+  }
 
   .circle {
     border-radius: 50%;

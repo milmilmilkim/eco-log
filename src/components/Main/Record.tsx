@@ -43,7 +43,7 @@ const Record: React.FC<Card> = ({
       <ul>
         {mergedBehaviorList.map((item, index) => {
           if (item.trim() !== '') {
-            return <Tag key={index}>{item}</Tag>;
+            return <Tag key={index}>{item.replace('customized', '')}</Tag>;
           } else {
             return null;
           }

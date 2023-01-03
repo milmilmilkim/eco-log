@@ -1,6 +1,7 @@
 export type UserInfo = {
   userId: Number;
-  userNickname: String;
+  userNickname?: String;
+  nickName?: String;
   selfIntroduce?: String;
 };
 
@@ -35,6 +36,11 @@ export type TagProps = {
   hover?: Boolean;
   className?: String;
 };
+
+export interface FriendItem extends UserInfo {
+  userSummary: Behavior[];
+  alreadyFollow: boolean;
+} 
 
 export type Behavior = {
   behaviorId: Number;

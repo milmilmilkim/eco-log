@@ -2,13 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { UserInfo } from '../typing/common';
 
-const Section: React.FC<UserInfo> = ({ userNickname, selfIntroduce }) => {
+const Section: React.FC<React.PropsWithChildren<UserInfo>> = ({ userNickname, nickName, selfIntroduce, children }) => {
+
+  const myNickname = userNickname || nickName || '-';
+
   return (
     <StyledProfile>
-      <div className="circle">{userNickname.substring(0, 1)}</div>
+      <div className="circle">{myNickname?.substring(0, 1)}</div>
       <div className="meta">
-        <h3>{userNickname}</h3>
+        <h3>{myNickname}</h3>
         <p>{selfIntroduce}</p>
+      </div>
+      <div className="inner">
+        {children}
       </div>
     </StyledProfile>
   );
@@ -38,6 +44,10 @@ const StyledProfile = styled.div`
     h3 {
       font-weight: 700;
     }
+  }
+
+  .inner {
+    margin-left: auto;
   }
 `;
 

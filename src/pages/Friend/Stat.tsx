@@ -1,16 +1,22 @@
-import PageTitle from '../components/PageTitle';
-import Section from '../components/Section';
+import PageTitle from '../../components/PageTitle';
+import Section from '../../components/Section';
 import styled from 'styled-components';
 import { useState, useEffect, useCallback } from 'react';
-import axios from '../config/Axios';
+import axios from '../../config/Axios';
 import { useRecoilState } from 'recoil';
-import { recoilMyProfileState } from '../state/recoilLoginState';
-import { getGrowText, maxGrow, getGrowImage } from '../config/Const';
-import Tag from '../components/Tag';
-import { Behavior, UserProfile } from '../typing/common';
+import { recoilMyProfileState } from '../../state/recoilLoginState';
+import { getGrowText, maxGrow, getGrowImage } from '../../config/Const';
+import Tag from '../../components/Tag';
+import { Behavior, UserProfile } from '../../typing/common';
 import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
 
-const Me = () => {
+
+const Stat = () => {
+
+    /* 남의 프로필일 때 */
+  const {userId}  = useParams();
+
   /* ================ STATE ================================ */
   const [data, setData] = useState<UserProfile | null>(null);
   const [myProfile] = useRecoilState(recoilMyProfileState);
@@ -21,10 +27,14 @@ const Me = () => {
 
   const getProgress = (value: Number): number => (value >= maxGrow ? 7 : (value as number) % 7);
   const getData = useCallback(async () => {
-    if (myProfile.userId) {
+
+    let targetId;
+    
+    targetId = userId || myProfile.userId
+    if (targetId) {
       const { data: res } = await axios.get('/api/user/profile', {
         params: {
-          targetId: myProfile.userId,
+          targetId,
         },
       });
       setData(res);
@@ -33,7 +43,7 @@ const Me = () => {
       const createAt = dayjs(res.createAt).format('YYYY-MM-DD');
       setCumulative(dayjs(new Date()).diff(createAt, 'day') + 1);
     }
-  }, [myProfile.userId]);
+  }, [myProfile.userId, userId]);
 
   useEffect(() => {
     getData();
@@ -72,7 +82,7 @@ const Me = () => {
         <MyStat>
           <div className="row">
             <span className="title">하루 평균</span>
-            <span className="number">{average || 0}</span>
+            <span className="number">{average?.toFixed(1) || 0}</span>
           </div>
           <div className="row">
             <span className="title">누적</span>
@@ -155,4 +165,4 @@ const Space = styled.div`
   width: 95%;
   margin: 5px;
 `;
-export default Me;
+export default Stat;

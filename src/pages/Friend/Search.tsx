@@ -39,12 +39,27 @@ const Search = () => {
     [myProfile.userId]
   );
 
-  const followNewFriend = useCallback(async (userId: Number) => {
-    const {data} = await axios.post('/api/user/follow', {
-      targetId: userId.toString()
-    })
-    console.log(data);
-  }, []);
+  const followNewFriend = useCallback(
+    async (userId: Number, index: number) => {
+      try {
+        const { data } = await axios.post('/api/user/follow', {
+          targetId: userId.toString(),
+        });
+
+        console.log(data);
+
+        // TODO - 뱃지 처리
+
+        const nextSearchList = [...searchList!];
+        nextSearchList[index].alreadyFollow = true;
+
+        setSearchList(nextSearchList);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [searchList]
+  );
 
   useEffect(() => {
     searchFriend();
@@ -67,7 +82,7 @@ const Search = () => {
                   <>
                     {!item.alreadyFollow && (
                       <FollowButton
-                        onClick={() => followNewFriend(item.userId)}
+                        onClick={() => followNewFriend(item.userId, index)}
                       >
                         팔로우
                       </FollowButton>

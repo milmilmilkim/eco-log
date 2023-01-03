@@ -12,7 +12,6 @@ const Section: React.FC<React.PropsWithChildren<ProfileProps>> = ({
   selfIntroduce,
   children,
   path,
-  userId,
 }) => {
   const myNickname = userNickname || nickName || '-';
   const navigate = useNavigate();
@@ -79,6 +78,7 @@ const StyledProfile = styled.div`
 
   .inner {
     margin-left: auto;
+    position: relative;
   }
 `;
 

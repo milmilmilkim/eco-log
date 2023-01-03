@@ -2,7 +2,28 @@ import PageTitle from '../../components/PageTitle';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { recoilLoginState, recoilMyProfileState } from '../../state/recoilLoginState';
+import { useRecoilState } from 'recoil';
+
+import { useNavigate } from 'react-router-dom';
+
 const MyPage = () => {
+
+  const navigate = useNavigate();
+
+  const [, setIsLogin] = useRecoilState(recoilLoginState);
+  const [, setMyProfile] = useRecoilState(recoilMyProfileState);
+
+  const logout = () => {
+    setIsLogin(false);
+    setMyProfile({
+      userId: '',
+      userNickname: '',
+    });
+    window.localStorage.removeItem('token');
+    navigate('/login');
+
+  }
   return (
     <>
       <PageTitle title='마이 페이지' prevButton={true} buttonPath='/' />
@@ -103,7 +124,7 @@ const MyPage = () => {
               fill='#333333'
             />
           </svg>
-          로그아웃
+          <span className='logout' onClick={logout}>로그아웃</span>
         </li>
         <li>계정 탈퇴</li>
       </StyledUl>
@@ -127,6 +148,10 @@ const StyledUl = styled.ul`
 
     svg {
       margin-right: 20px;
+    }
+
+    span.logout {
+      cursor: pointer;
     }
   }
 

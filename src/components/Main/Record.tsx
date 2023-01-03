@@ -38,7 +38,7 @@ const Record: React.FC<Card> = ({
 
   return (
     <StyledRecord>
-      <Profile {...userInfo} />
+      <Profile {...userInfo} path={`/friend/${userInfo.userId}`} />
       <Section title="오늘의 실천" />
       <ul>
         {mergedBehaviorList.map((item, index) => {

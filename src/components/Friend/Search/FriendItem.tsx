@@ -9,10 +9,9 @@ const FriendItemComponent = (props: React.PropsWithChildren<FriendItem>) => {
 
   return (
     <StyledRecord>
-     
-        <Profile {...props} path={`/friend/${props.userId}`} />
-    
-      <Section title='오늘의 실천' />
+      <Profile {...props} path={`/friend/${props.userId}`} />
+
+      <Section title='자주 기록한 실천' />
       <ul>
         {userSummary.map((item, index) => {
           if (item.name?.trim() !== '') {

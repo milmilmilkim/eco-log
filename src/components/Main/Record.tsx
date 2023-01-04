@@ -2,7 +2,7 @@ import Section from '../Section';
 import Profile from '../Profile';
 import Tag from '../Tag';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '../../typing/common';
 import axios from '../../config/Axios';
 
@@ -18,9 +18,10 @@ const Record: React.FC<Card> = ({
   const [heart, setHeart] = useState(heartCount);
   const mergedBehaviorList: String[] = [...behaviorList, ...(customBehaviorList as [])];
   const [isActive, setIsActive] = useState<Boolean>(false);
+
   const clickHeart = async () => {
     setIsActive(true);
-    setHeart(Number(heartCount) + 1);
+    setHeart(Number(heart) + 1);
     await axios.post('/api/post/heart', {
       targetPostId: postId,
     });
@@ -35,6 +36,12 @@ const Record: React.FC<Card> = ({
       },
     });
   };
+
+  useEffect(() => {
+    if(alreadyHeart) {
+      setIsActive(true);
+    }
+  },  [alreadyHeart]);
 
   return (
     <StyledRecord>
@@ -53,7 +60,7 @@ const Record: React.FC<Card> = ({
       <div>
         <hr />
         <span className="like">
-          {isActive || alreadyHeart ? (
+          {isActive ? (
             <div className={`heart active`} onClick={cancelHeart}>
               <i className="fa fa-heart" aria-hidden="true"></i>
             </div>

@@ -126,9 +126,10 @@ export const BadgeMessage = [
 // 실천 카테고리
 
 export const categoryName = {
- spend  : "소비",  
- outdoor: "외출", 
- living : "생활", 
- eat    : "식사", 
- etc   :  "기타", 
-}
+  spend: '소비',
+  outdoor: '외출',
+  living: '생활',
+  eat: '식사',
+  etc: '기타',
+};
+

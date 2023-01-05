@@ -14,7 +14,10 @@ import Tag from '../components/Tag';
 import Input from '../components/Form/Input';
 
 //type
-import { Behavior, BehaviorCategory, Post } from '../typing/common';
+import { Behavior, BehaviorCategory, Post} from '../typing/common';
+
+// const
+import { categoryName } from '../config/Const';
 
 const Write = () => {
   const Navigate = useNavigate();
@@ -22,6 +25,7 @@ const Write = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [behavior, setBehavior] = useState<BehaviorCategory | null>(null);
   const [clicked, setClicked] = useState(false);
+  const [customBehavior, setCustomBehavior] = useState<Array<string>>([]);
   const [post, setPost] = useState<Post>({
     comment: '',
     doingDay: dayjs(date).format('YYYY-MM-DD'),
@@ -55,10 +59,39 @@ const Write = () => {
     });
   };
 
+  const addCustomBehavior = (item: string) => {
+    let nextBehaviors;
+    if(customBehavior.includes(item)) {
+      //삭제
+      nextBehaviors = customBehavior.filter((v) => v !== item)
+    }else {
+     //추가
+     nextBehaviors = post.customizedBehaviors as string[];
+     nextBehaviors.push(item);
+    }
+   
+    setCustomBehavior(nextBehaviors);
+    setPost({...post, customizedBehaviors: nextBehaviors});
+  }
+
+
+
 
   const onSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setPost(post);
+    try{
+      if(post.behaviorList.length < 1 && post.customizedBehaviors.length < 1) {
+        throw new Error('실천 내용을 입력하세요')
+      }
+    }catch(err:any) {
+      Swal.fire({
+        text: err.message,
+        icon: 'warning',
+        confirmButtonText: 'ok',
+      });
+      return;
+    }
+  
     await axios.post('/api/post', post);
     //성공시
     Swal.fire({
@@ -70,8 +103,15 @@ const Write = () => {
     Navigate('/main');
   };
 
+  /**
+   * @description: 커스텀 behavior 입력 후 엔터
+   */
   const handleKeyUp = (e: React.KeyboardEvent) => {
-    if (e.key === 'enter') {
+    if (e.key === 'Enter') {
+      let value = inputRef.current!.value;
+      if(!customBehavior.includes(value) && value.trim() !== '') addCustomBehavior(value);
+      inputRef.current!.value = '';
+      setClicked(false);
     }
   };
 
@@ -95,18 +135,19 @@ const Write = () => {
 
   const BehaviorTag = () => {
     const result: JSX.Element[] = [];
-
     for (let category in behavior) {
       const behaviorList = behavior[category as keyof BehaviorCategory];
+      const categoryKor = categoryName[category as keyof BehaviorCategory]
 
       if (behaviorList.length > 0 || category === 'etc') {
+        
         result.push(
           <div key={category}>
             <span
               className='category-title'
               style={{ fontSize: '0.8rem', marginBottom: '10px' }}
             >
-              {category}
+              {categoryKor}
             </span>
             <ul>
               {behaviorList.map((item: Behavior) => (
@@ -125,6 +166,13 @@ const Write = () => {
               ))}
               {category === 'etc' && (
                 <>
+                  {customBehavior.map((item) => (
+                    <Tag
+                    onClick={() => addCustomBehavior(item)} 
+                    className={customBehavior.includes(item) ? 'active' : ''}>
+                      {item}
+                    </Tag>
+                  ))}
                   <Tag className='plus'>
                     {clicked ? (
                       <>
@@ -133,7 +181,7 @@ const Write = () => {
                           type='text'
                           onBlur={onBlur}
                           maxLength={15}
-                          onKeyUp={handleKeyUp}
+                          onKeyDown={handleKeyUp}
                         />
                       </>
                     ) : (

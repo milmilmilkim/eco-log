@@ -55,15 +55,8 @@ const Write = () => {
     });
   };
 
-  const onFormChange = (e: React.FormEvent<HTMLFormElement>) => {
-    const {comment: {value : comment}} = e.currentTarget;
-    setPost({
-      ...post,
-      comment,
-    });
-  };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     setPost(post);
     await axios.post('/api/post', post);
@@ -76,6 +69,21 @@ const Write = () => {
     });
     Navigate('/main');
   };
+
+  const handleKeyUp = (e: React.KeyboardEvent) => {
+    if (e.key === 'enter') {
+    }
+  };
+
+  const onCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+    value: comment ,
+    } = e.currentTarget;
+    setPost({
+      ...post,
+      comment,
+    });
+  }
 
   useEffect(() => {
     getBehavior();
@@ -117,20 +125,21 @@ const Write = () => {
               ))}
               {category === 'etc' && (
                 <>
-                <Tag className='plus'>
-                  {clicked ? (
-                    <>
-                    <input
-                      ref={inputRef}
-                      type='text'
-                      onBlur={onBlur}
-                      maxLength={15}
-                    />
-                    </>
-                  ) : (
-                    <span onClick={activeInput}>직접 입력</span>
-                  )}
-                </Tag>
+                  <Tag className='plus'>
+                    {clicked ? (
+                      <>
+                        <input
+                          ref={inputRef}
+                          type='text'
+                          onBlur={onBlur}
+                          maxLength={15}
+                          onKeyUp={handleKeyUp}
+                        />
+                      </>
+                    ) : (
+                      <span onClick={activeInput}>직접 입력</span>
+                    )}
+                  </Tag>
                 </>
               )}
             </ul>
@@ -142,12 +151,12 @@ const Write = () => {
   };
 
   return (
-    <form style={{ width: '100%' }} onChange={onFormChange} onSubmit={onSubmit}>
+    <div style={{ width: '100%' }}>
       <PageTitle
         prevButton={true}
         title={dayjs(date).format('YYYY년 MM월 DD일')}
       >
-        <TextButton type='submit'>기록</TextButton>
+        <TextButton onClick={onSubmit}>기록</TextButton>
       </PageTitle>
       <div style={{ marginBottom: '20px' }}></div>
       <Section title='오늘의 실천'>
@@ -158,10 +167,10 @@ const Write = () => {
         <Input
           name='comment'
           placeholder='목표했던 점이나 아쉬웠던 점을 입력해주세요'
+          onChange={onCommentChange}
         />
-        <input type='text' style={{display: 'none'}} />
       </Section>
-    </form>
+    </div>
   );
 };
 

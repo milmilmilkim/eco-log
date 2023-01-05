@@ -48,6 +48,14 @@ export type Behavior = {
   count?: number;
 };
 
+export interface BehaviorCategory  {
+  spend: Behavior[]
+  outdoor: Behavior[]
+  living: Behavior[]
+  eat: Behavior[]
+  etc: Behavior[]
+}
+
 export type Post = {
   comment?: String;
   doingDay: String;

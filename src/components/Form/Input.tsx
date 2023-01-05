@@ -5,10 +5,26 @@ type InputProps = {
   placeholder?: string;
   defaultValue?: string;
   maxLength?: number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input: React.FC<InputProps> = ({ name, placeholder, maxLength, defaultValue }) => {
-  return <StyledInput type="text" name={name} placeholder={placeholder} defaultValue={defaultValue} maxLength={maxLength || 10} />;
+const Input: React.FC<InputProps> = ({
+  name,
+  placeholder,
+  maxLength,
+  defaultValue,
+  onChange,
+}) => {
+  return (
+    <StyledInput
+      type='text'
+      name={name}
+      placeholder={placeholder}
+      defaultValue={defaultValue}
+      maxLength={maxLength || 10}
+      onChange={onChange}
+    />
+  );
 };
 
 const StyledInput = styled.input`

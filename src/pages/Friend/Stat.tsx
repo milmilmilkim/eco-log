@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from '../../config/Axios';
 import { useRecoilState } from 'recoil';
 import { recoilMyProfileState } from '../../state/recoilLoginState';
-import { getGrowText, maxGrow, getGrowImage } from '../../config/Const';
+import { getGrowText, maxGrow as MAX_GROW, getGrowImage } from '../../config/Const';
 import Tag from '../../components/Tag';
 import { Behavior, UserProfile } from '../../typing/common';
 import dayjs from 'dayjs';
@@ -25,7 +25,12 @@ const Stat = () => {
   const [cumulative, setCumulative] = useState<number>(0);
   const [growImage, setGrowImage] = useState<{ src: String; alt: String }>({ alt: '', src: '' });
 
-  const getProgress = (value: Number): number => (value >= maxGrow ? 7 : (value as number) % 7);
+  const getProgress = (value: number): number => {
+    const remainder = value % 7;
+    if(value >= MAX_GROW || (remainder === 0 && value !== 0)) return 7
+    return remainder;
+  };
+
   const getData = useCallback(async () => {
 
     let targetId;

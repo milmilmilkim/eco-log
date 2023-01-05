@@ -14,17 +14,17 @@ import Tag from '../components/Tag';
 import Input from '../components/Form/Input';
 
 //type
-import { Behavior, Post } from '../typing/common';
+import { Behavior, BehaviorCategory, Post } from '../typing/common';
 
 const Write = () => {
   const Navigate = useNavigate();
   const [date] = useRecoilState(recoilDateState);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [behavior, setBehavior] = useState<Behavior[]>([]);
+  const [behavior, setBehavior] = useState<BehaviorCategory | null>(null);
   const [clicked, setClicked] = useState(false);
   const [post, setPost] = useState<Post>({
     comment: '',
-    doingDay: '',
+    doingDay: dayjs(date).format('YYYY-MM-DD'),
     behaviorList: [],
     customizedBehaviors: [],
   });
@@ -52,12 +52,11 @@ const Write = () => {
     setPost({
       ...post,
       behaviorList: newBehaviorList,
-      doingDay: dayjs(date).format('YYYY-MM-DD'),
     });
   };
 
   const onFormChange = (e: React.FormEvent<HTMLFormElement>) => {
-    const comment = e.currentTarget.comment.value;
+    const {comment: {value : comment}} = e.currentTarget;
     setPost({
       ...post,
       comment,
@@ -67,7 +66,6 @@ const Write = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setPost(post);
-    console.log(post);
     await axios.post('/api/post', post);
     //성공시
     Swal.fire({
@@ -87,25 +85,81 @@ const Write = () => {
     inputRef.current?.focus();
   }, [clicked]);
 
+  const BehaviorTag = () => {
+    const result: JSX.Element[] = [];
+
+    for (let category in behavior) {
+      const behaviorList = behavior[category as keyof BehaviorCategory];
+
+      if (behaviorList.length > 0 || category === 'etc') {
+        result.push(
+          <div key={category}>
+            <span
+              className='category-title'
+              style={{ fontSize: '0.8rem', marginBottom: '10px' }}
+            >
+              {category}
+            </span>
+            <ul>
+              {behaviorList.map((item: Behavior) => (
+                <Tag
+                  className={
+                    post.behaviorList.includes(item.behaviorId) ? 'active' : ''
+                  }
+                  key={`id_${item.behaviorId}`}
+                  backgroundColor='#fff'
+                  border
+                >
+                  <div onClick={() => addBehaviorId(item.behaviorId)}>
+                    {item.name}
+                  </div>
+                </Tag>
+              ))}
+              {category === 'etc' && (
+                <>
+                <Tag className='plus'>
+                  {clicked ? (
+                    <>
+                    <input
+                      ref={inputRef}
+                      type='text'
+                      onBlur={onBlur}
+                      maxLength={15}
+                    />
+                    </>
+                  ) : (
+                    <span onClick={activeInput}>직접 입력</span>
+                  )}
+                </Tag>
+                </>
+              )}
+            </ul>
+          </div>
+        );
+      }
+    }
+    return result;
+  };
+
   return (
-    <form onChange={onFormChange} onSubmit={onSubmit}>
-      <PageTitle prevButton={true} title={dayjs(date).format('YYYY년 MM월 DD일')}>
-        <TextButton type="submit">기록</TextButton>
+    <form style={{ width: '100%' }} onChange={onFormChange} onSubmit={onSubmit}>
+      <PageTitle
+        prevButton={true}
+        title={dayjs(date).format('YYYY년 MM월 DD일')}
+      >
+        <TextButton type='submit'>기록</TextButton>
       </PageTitle>
       <div style={{ marginBottom: '20px' }}></div>
-      <Section title="오늘의 실천">
-        <ul>
-          {behavior.map((item: Behavior) => (
-            <Tag className={post.behaviorList.includes(item.behaviorId) ? 'active' : ''} key={`id_${item.behaviorId}`} backgroundColor="#fff" border>
-              <div onClick={() => addBehaviorId(item.behaviorId)}>{item.name}</div>
-            </Tag>
-          ))}
-          <Tag className="plus">{clicked ? <input ref={inputRef} type="text" onBlur={onBlur} maxLength={15} /> : <span onClick={activeInput}>직접 입력</span>}</Tag>
-        </ul>
+      <Section title='오늘의 실천'>
+        <ul>{behavior && BehaviorTag()}</ul>
       </Section>
       <div style={{ marginBottom: '20px' }}></div>
-      <Section title="오늘의 한마디">
-        <Input name="comment" placeholder="목표했던 점이나 아쉬웠던 점을 입력해주세요" />
+      <Section title='오늘의 한마디'>
+        <Input
+          name='comment'
+          placeholder='목표했던 점이나 아쉬웠던 점을 입력해주세요'
+        />
+        <input type='text' style={{display: 'none'}} />
       </Section>
     </form>
   );

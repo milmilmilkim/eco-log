@@ -23,10 +23,8 @@ const useAxios = () => {
   const errorHandler = async (err: any) => {
     const code = err.response?.status || err.response?.data.status;
     let message;
-    console.log(err);
 
     if (code === 401) {
-      console.log('401');
       errorAlert('토큰이 만료되었습니다. 다시 로그인해 주세요.');
       logout();
     } else if (code === 500) {

@@ -26,7 +26,7 @@ axios.interceptors.response.use(
     console.error(error);
     Swal.fire({
       title: 'Error!',
-      text: error.response.data || error.message,
+      text: error.response.data.message || error.message,
       icon: 'error',
       confirmButtonText: 'ok',
     });

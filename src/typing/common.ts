@@ -1,7 +1,22 @@
 export type UserInfo = {
   userId: Number;
-  userNickname: String;
+  userNickname?: String;
+  nickName?: String;
   selfIntroduce?: String;
+};
+
+export type UserProfile = {
+  alreadyFollow: boolean;
+  behaviorCount: number;
+  createAt: string;
+  myProfile: boolean;
+  public: boolean;
+  recentlyCustomBehaviorList: string[];
+  selfIntroduce: string;
+  userId: number;
+  userNickname: string;
+  userPostTotalCount: number;
+  userSummary: Behavior[];
 };
 
 export type Card = {
@@ -14,7 +29,7 @@ export type Card = {
   alreadyHeart: Boolean;
 };
 
-export type TagProps = {
+export interface TagProps extends OnClick  {
   children: JSX.Element | String;
   backgroundColor?: String;
   border?: Boolean;
@@ -22,14 +37,32 @@ export type TagProps = {
   className?: String;
 };
 
+export interface FriendItem extends UserInfo {
+  userSummary: Behavior[];
+  alreadyFollow: boolean;
+} 
+
 export type Behavior = {
   behaviorId: Number;
   name: String;
+  count?: number;
 };
+
+export interface BehaviorCategory  {
+  spend: Behavior[]
+  outdoor: Behavior[]
+  living: Behavior[]
+  eat: Behavior[]
+  etc: Behavior[]
+}
 
 export type Post = {
   comment?: String;
   doingDay: String;
   behaviorList: Number[];
-  customizedBehaviors?: String[];
+  customizedBehaviors: String[];
 };
+
+export interface OnClick {
+  onClick?: () => void
+}

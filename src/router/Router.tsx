@@ -10,7 +10,7 @@ import MyPage from '../pages/MyPage/MyPage';
 import Edit from '../pages/MyPage/Edit';
 import Write from '../pages/Write';
 import Friend from '../pages/Friend/Index';
-import Me from '../pages/Me';
+import Stat from '../pages/Friend/Stat';
 /* 로그인 */
 import Oauth from '../pages/Oauth';
 import Search from '../pages/Friend/Search';
@@ -35,10 +35,11 @@ const Router = () => {
           <Route path="edit" element={<Edit />} />
         </Route>
         {/* 실천현황 */}
-        <Route path="/me" element={<Me />} />
+        <Route path="/me" element={<Stat />} />
         {/* 동료 */}
         <Route path="friend">
           <Route index element={<Friend />} />
+          <Route path=":userId" element={<Stat />} />
           <Route path="search" element={<Search />} />
         </Route>
         {/*404*/}

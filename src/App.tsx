@@ -16,7 +16,6 @@ function App() {
       const token = window.localStorage.getItem('token') || null;
       if (token) {
         const { data } = await axios.get('/api/me');
-        console.log(data);
         setIsLogin(true);
         setMyProfile(data);
       }

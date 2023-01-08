@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 import { TagProps } from '../typing/common';
 
-const Tag: React.FC<TagProps> = ({ children, backgroundColor, border, className }) => {
+
+const Tag: React.FC<TagProps> = ({ children, backgroundColor, border, className, onClick }) => {
   return (
-    <MyTag backgroundColor={backgroundColor} border={border} className={className}>
+    <MyTag onClick={onClick} backgroundColor={backgroundColor} border={border} className={className}>
       {children}
     </MyTag>
   );

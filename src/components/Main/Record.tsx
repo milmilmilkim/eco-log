@@ -2,17 +2,26 @@ import Section from '../Section';
 import Profile from '../Profile';
 import Tag from '../Tag';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '../../typing/common';
 import axios from '../../config/Axios';
 
-const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, customBehaviorList, heartCount, alreadyHeart }) => {
+const Record: React.FC<Card> = ({
+  postId,
+  userInfo,
+  comment,
+  behaviorList,
+  customBehaviorList,
+  heartCount,
+  alreadyHeart,
+}) => {
   const [heart, setHeart] = useState(heartCount);
   const mergedBehaviorList: String[] = [...behaviorList, ...(customBehaviorList as [])];
   const [isActive, setIsActive] = useState<Boolean>(false);
+
   const clickHeart = async () => {
     setIsActive(true);
-    setHeart(Number(heartCount) + 1);
+    setHeart(Number(heart) + 1);
     await axios.post('/api/post/heart', {
       targetPostId: postId,
     });
@@ -20,7 +29,7 @@ const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, custo
 
   const cancelHeart = async () => {
     setIsActive(false);
-    setHeart(Number(heartCount) - 1);
+    setHeart(Number(heart) - 1);
     await axios.delete('/api/post/heart', {
       data: {
         targetPostId: postId,
@@ -28,14 +37,20 @@ const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, custo
     });
   };
 
+  useEffect(() => {
+    if(alreadyHeart) {
+      setIsActive(true);
+    }
+  },  [alreadyHeart]);
+
   return (
     <StyledRecord>
-      <Profile {...userInfo} />
+      <Profile {...userInfo} path={`/friend/${userInfo.userId}`} />
       <Section title="오늘의 실천" />
       <ul>
         {mergedBehaviorList.map((item, index) => {
           if (item.trim() !== '') {
-            return <Tag key={index}>{item}</Tag>;
+            return <Tag key={index}>{item.replace('customized', '')}</Tag>;
           } else {
             return null;
           }
@@ -45,7 +60,7 @@ const Record: React.FC<Card> = ({ postId, userInfo, comment, behaviorList, custo
       <div>
         <hr />
         <span className="like">
-          {isActive || alreadyHeart ? (
+          {isActive ? (
             <div className={`heart active`} onClick={cancelHeart}>
               <i className="fa fa-heart" aria-hidden="true"></i>
             </div>

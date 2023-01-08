@@ -32,7 +32,7 @@ const BadgeList = () => {
           })}
       </BadgeContainer>
 
-      <DescContainer>{data?.indexOf(true) !== -1 ? <Outlet /> : <span className="title">'아직 획득한 뱃지가 없어요'</span>}</DescContainer>
+      <DescContainer>{data?.indexOf(true) !== -1 ? <Outlet /> : <span className="title">아직 획득한 뱃지가 없어요</span>}</DescContainer>
     </>
   );
 };

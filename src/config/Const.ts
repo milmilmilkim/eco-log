@@ -102,7 +102,7 @@ export const badgeInfo = [
     index: 3,
     name: '실천가',
     condition: '실천 입력 40개',
-    desc: '작심삼일도 열 번이면 서른 개의 실천이 쌓여요',
+    desc: '다짐한 건 꼭 지켜내는 당신',
     src: badge_3,
   },
   {

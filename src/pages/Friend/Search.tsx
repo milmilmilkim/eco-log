@@ -7,12 +7,15 @@ import FriendItem from '../../components/Friend/Search/FriendItem';
 import { FriendItem as FriendItemType } from '../../typing/common';
 import { recoilMyProfileState } from '../../state/recoilLoginState';
 import { useRecoilState } from 'recoil';
-
+import Swal from 'sweetalert2';
+import { badgeInfo } from '../../config/Const';
+import { useNavigate } from 'react-router-dom';
 const Search = () => {
   const [myProfile] = useRecoilState(recoilMyProfileState);
 
-  const [searchList, setSearchList] =
-    useState<Array<FriendItemType> | null>(null);
+  const [searchList, setSearchList] = useState<Array<FriendItemType> | null>(null);
+
+  const Navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,10 +33,7 @@ const Search = () => {
         },
       });
 
-      const filteredData = data?.filter(
-        (item: FriendItemType) =>
-          item.userId.toString() !== myProfile.userId.toString()
-      );
+      const filteredData = data?.filter((item: FriendItemType) => item.userId.toString() !== myProfile.userId.toString());
       setSearchList(filteredData);
     },
     [myProfile.userId]
@@ -46,9 +46,18 @@ const Search = () => {
           targetId: userId.toString(),
         });
 
-        console.log(data);
-
         // TODO - 뱃지 처리
+        const { badgeAchieveList } = data;
+        if (badgeAchieveList?.length > 0) {
+          const badgeIndex = Number(badgeAchieveList[0]);
+          await Swal.fire({
+            icon: 'info',
+            text: '새로운 뱃지를 획득했습니다',
+            title: `${badgeInfo[badgeIndex].name}`,
+            confirmButtonText: 'ok',
+          });
+          Navigate(`/badge/${badgeIndex}`);
+        }
 
         const nextSearchList = [...searchList!];
         nextSearchList[index].alreadyFollow = true;
@@ -58,7 +67,7 @@ const Search = () => {
         console.error(err);
       }
     },
-    [searchList]
+    [searchList, Navigate]
   );
 
   useEffect(() => {
@@ -67,10 +76,10 @@ const Search = () => {
 
   return (
     <>
-      <PageTitle title='동료 검색' prevButton />
+      <PageTitle title="동료 검색" prevButton />
       <StyledSearch>
         <form onSubmit={onSubmit}>
-          <Input name='searchInput' placeholder='동료의 닉네임을 입력하세요' />
+          <Input name="searchInput" placeholder="동료의 닉네임을 입력하세요" />
         </form>
       </StyledSearch>
       {searchList ? (
@@ -79,15 +88,7 @@ const Search = () => {
             {searchList.map((item: FriendItemType, index: number) => {
               return (
                 <FriendItem {...item} key={index}>
-                  <>
-                    {!item.alreadyFollow && (
-                      <FollowButton
-                        onClick={() => followNewFriend(item.userId, index)}
-                      >
-                        팔로우
-                      </FollowButton>
-                    )}
-                  </>
+                  <>{!item.alreadyFollow && <FollowButton onClick={() => followNewFriend(item.userId, index)}>팔로우</FollowButton>}</>
                 </FriendItem>
               );
             })}

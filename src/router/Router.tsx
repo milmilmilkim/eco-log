@@ -15,6 +15,10 @@ import Edit from '../pages/MyPage/Edit';
 import Write from '../pages/Write';
 import Friend from '../pages/Friend/Index';
 import Stat from '../pages/Friend/Stat';
+
+import Badge from '../pages/Badge';
+import BadgeDesc from '../components/Badge/BadgeDesc';
+
 /* 로그인 */
 import Oauth from '../pages/Oauth';
 import Search from '../pages/Friend/Search';
@@ -51,6 +55,10 @@ const Router = () => {
             <Route index element={<Friend />} />
             <Route path=":userId" element={<Stat />} />
             <Route path="search" element={<Search />} />
+          </Route>
+          {/* 뱃지 */}
+          <Route path="badge" element={<Badge />}>
+            <Route path=":badgeId" element={<BadgeDesc />} />
           </Route>
         </Route>
 

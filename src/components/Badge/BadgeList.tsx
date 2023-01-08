@@ -62,6 +62,8 @@ const BadgeContainer = styled.div`
   gap: 50px;
   margin-top: 20px;
   margin-bottom: 20px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid ${(props) => props.theme.color.borderColor};
 
   .item {
     display: flex;

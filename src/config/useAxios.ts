@@ -1,6 +1,5 @@
 import Instance from './Axios';
 import Swal from 'sweetalert2';
-import { AxiosError } from 'axios';
 
 import useLogin from '../Hooks/useLogin';
 

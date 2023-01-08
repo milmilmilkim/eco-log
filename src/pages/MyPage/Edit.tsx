@@ -56,7 +56,7 @@ const Edit = () => {
     if (recoilMyProfile.userId) {
       getMyProfile();
     }
-  }, [getMyProfile]);
+  }, [getMyProfile, recoilMyProfile.userId]);
 
   useEffect(() => {
     setLabelText(userInfo?.public ? LabelText.true : LabelText.false);

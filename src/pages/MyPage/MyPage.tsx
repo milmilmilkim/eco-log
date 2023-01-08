@@ -2,7 +2,7 @@ import PageTitle from '../../components/PageTitle';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import useLogin from '../../components/Hooks/useLogin';
+import useLogin from '../../Hooks/useLogin';
 
 const MyPage = () => {
   const { logout } = useLogin();

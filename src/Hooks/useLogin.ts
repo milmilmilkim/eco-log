@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { recoilLoginState, recoilMyProfileState } from '../../state/recoilLoginState';
-import axios from '../../config/Axios';
+import { recoilLoginState, recoilMyProfileState } from '../state/recoilLoginState';
+import axios from '../config/Axios';
 
 const useLogout = () => {
   const navigate = useNavigate();

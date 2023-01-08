@@ -53,7 +53,9 @@ const Edit = () => {
   }, [recoilMyProfile]);
 
   useEffect(() => {
-    getMyProfile();
+    if (recoilMyProfile.userId) {
+      getMyProfile();
+    }
   }, [getMyProfile]);
 
   useEffect(() => {
@@ -64,9 +66,7 @@ const Edit = () => {
     e.currentTarget.checked ? setLabelText(LabelText.true) : setLabelText(LabelText.false);
   };
 
-  const profileSave: React.FormEventHandler<HTMLFormElement> = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const profileSave: React.FormEventHandler<HTMLFormElement> = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { nickname, selfIntroduce, isPublic } = e.target as HTMLFormElement;
 
@@ -97,30 +97,15 @@ const Edit = () => {
           </PageTitle>
 
           <Section title="이름">
-            <Input
-              name="nickname"
-              placeholder="닉네임을 입력하세요"
-              maxLength={10}
-              defaultValue={userInfo.userNickname as string}
-            />
+            <Input name="nickname" placeholder="닉네임을 입력하세요" maxLength={10} defaultValue={userInfo.userNickname as string} />
           </Section>
 
           <Section title="자기소개">
-            <Input
-              name="selfIntroduce"
-              defaultValue={(userInfo.selfIntroduce as string) || ''}
-              placeholder="자기소개를 입력하세요"
-              maxLength={100}
-            />
+            <Input name="selfIntroduce" defaultValue={(userInfo.selfIntroduce as string) || ''} placeholder="자기소개를 입력하세요" maxLength={100} />
           </Section>
 
           <Section title="공개 설정">
-            <Switch
-              name="isPublic"
-              defaultChecked={userInfo.public === 1 ? true : false}
-              label={labelText}
-              onChange={switchChange}
-            />
+            <Switch name="isPublic" defaultChecked={userInfo.public === 1 ? true : false} label={labelText} onChange={switchChange} />
           </Section>
         </form>
       )}

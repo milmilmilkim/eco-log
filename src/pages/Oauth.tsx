@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import axios from '../config/Axios';
-import useLogin from '../components/Hooks/useLogin';
+import useLogin from '../Hooks/useLogin';
 
 const Auth = () => {
   const { login } = useLogin();

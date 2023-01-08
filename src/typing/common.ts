@@ -29,18 +29,18 @@ export type Card = {
   alreadyHeart: Boolean;
 };
 
-export interface TagProps extends OnClick  {
+export interface TagProps extends OnClick {
   children: JSX.Element | String;
   backgroundColor?: String;
   border?: Boolean;
   hover?: Boolean;
   className?: String;
-};
+}
 
 export interface FriendItem extends UserInfo {
   userSummary: Behavior[];
   alreadyFollow: boolean;
-} 
+}
 
 export type Behavior = {
   behaviorId: Number;
@@ -48,12 +48,12 @@ export type Behavior = {
   count?: number;
 };
 
-export interface BehaviorCategory  {
-  spend: Behavior[]
-  outdoor: Behavior[]
-  living: Behavior[]
-  eat: Behavior[]
-  etc: Behavior[]
+export interface BehaviorCategory {
+  spend: Behavior[];
+  outdoor: Behavior[];
+  living: Behavior[];
+  eat: Behavior[];
+  etc: Behavior[];
 }
 
 export type Post = {
@@ -64,5 +64,13 @@ export type Post = {
 };
 
 export interface OnClick {
-  onClick?: () => void
+  onClick?: () => void;
+}
+
+export interface Badge {
+  index: number;
+  name: string;
+  condition: string;
+  desc: string;
+  src: string;
 }

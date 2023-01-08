@@ -1,5 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import PageTitle from '../components/PageTitle';
+
+// @ts-ignore
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 export default {

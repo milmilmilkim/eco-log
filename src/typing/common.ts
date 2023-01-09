@@ -74,3 +74,9 @@ export interface Badge {
   desc: string;
   src: string;
 }
+
+export enum Platform {
+  Kakao,
+  Google,
+  Naver,
+}

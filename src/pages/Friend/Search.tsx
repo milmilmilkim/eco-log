@@ -79,7 +79,7 @@ const Search = () => {
       <PageTitle title="동료 검색" prevButton />
       <StyledSearch>
         <form onSubmit={onSubmit}>
-          <Input name="searchInput" placeholder="동료의 닉네임을 입력하세요" />
+          <Input name="searchInput" placeholder="동료의 Email/닉네임을 입력하세요" />
         </form>
       </StyledSearch>
       {searchList ? (

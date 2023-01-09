@@ -21,7 +21,7 @@ const useAxios = () => {
   };
 
   const errorHandler = async (err: any) => {
-    const code = err.response?.status || err.response?.data.status;
+    const code = err.response?.status || err.response?.data?.status || 500;
     let message;
 
     if (code === 401) {

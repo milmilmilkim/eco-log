@@ -28,7 +28,7 @@ const StyledItem = styled.div`
   width: 100%;
   height: 100%;
   display: block;
-  padding: 5px;
+  padding: 10px;
   cursor: default;
   border: 1px solid #fff;
 
@@ -44,6 +44,8 @@ const StyledItem = styled.div`
 
   img {
     opacity: 0.2;
+    width: 100%;
+    height: 100%;
 
     &.use {
       opacity: 1;

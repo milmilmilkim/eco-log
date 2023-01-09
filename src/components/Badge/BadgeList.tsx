@@ -11,7 +11,9 @@ const BadgeList = () => {
 
   const getData = async () => {
     const { data } = await axios.get('/api/user/badge');
-    const badgeArray: boolean[] = data.badgeStateList?.map((v: string) => (v === '1' ? true : false));
+    const badgeArray: boolean[] = data.badgeStateList?.map((v: string) =>
+      v === '1' ? true : false
+    );
     setData(badgeArray);
   };
 
@@ -27,12 +29,19 @@ const BadgeList = () => {
             return (
               <div key={`${index}_${badge.name}`}>
                 <BadgeItem badge={badge} isActive={data[badge.index]} />
+                {/* <BadgeItem badge={badge} isActive={false} /> */}
               </div>
             );
           })}
       </BadgeContainer>
 
-      <DescContainer>{data?.indexOf(true) !== -1 ? <Outlet /> : <span className="title">아직 획득한 뱃지가 없어요</span>}</DescContainer>
+      <DescContainer>
+        {data?.indexOf(true) !== -1 ? (
+          <Outlet />
+        ) : (
+          <span className='title'>아직 획득한 뱃지가 없어요</span>
+        )}
+      </DescContainer>
     </>
   );
 };
@@ -40,6 +49,8 @@ const BadgeList = () => {
 const DescContainer = styled.div`
   width: 100%;
   margin-bottom: 100px;
+  border-top: 1px solid ${props => props.theme.color.borderColor};
+
   .title {
     font-size: 1.2rem;
     text-align: center;
@@ -57,13 +68,13 @@ const DescContainer = styled.div`
 `;
 
 const BadgeContainer = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 50px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  padding-bottom: 50px;
-  border-bottom: 1px solid ${(props) => props.theme.color.borderColor};
+  grid-template-rows: auto;
+  margin: 20px;
+  box-sizing: border-box;
+
 
   .item {
     display: flex;
